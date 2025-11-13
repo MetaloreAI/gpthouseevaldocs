@@ -396,10 +396,10 @@ Here's a complete example that puts all the steps together:
     import os
 
     # Configuration
-    base_url = os.getenv('OPIK_URL_OVERRIDE', 'https://www.comet.com/gpthouse/api')
+    base_url = os.getenv('GPTHOUSE_URL_OVERRIDE', 'https://www.comet.com/gpthouse/api')
     headers = {
-        "Authorization": os.getenv('OPIK_API_KEY'),
-        "Comet-Workspace": os.getenv('OPIK_WORKSPACE'),
+        "Authorization": os.getenv('GPTHOUSE_API_KEY'),
+        "Comet-Workspace": os.getenv('GPTHOUSE_WORKSPACE'),
         "Content-Type": "application/json"
     }
 
@@ -577,9 +577,9 @@ public class GPTHOUSEExperimentLogger {
     public static void main(String[] args) {
         ObjectMapper mapper = new ObjectMapper();
 
-        String baseURI = System.getenv("OPIK_URL_OVERRIDE");
-        String workspaceName = System.getenv("OPIK_WORKSPACE");
-        String apiKey = System.getenv("OPIK_API_KEY");
+        String baseURI = System.getenv("GPTHOUSE_URL_OVERRIDE");
+        String workspaceName = System.getenv("GPTHOUSE_WORKSPACE");
+        String apiKey = System.getenv("GPTHOUSE_API_KEY");
 
         String datasetName = "geography-questions";
         String experimentName = "geography-bot-v1";
@@ -699,9 +699,9 @@ Configure authentication based on your deployment:
 For security and flexibility, use environment variables for credentials:
 
 ```bash
-export OPIK_API_KEY="your_api_key"
-export OPIK_WORKSPACE="your_workspace_name"
-export OPIK_URL_OVERRIDE="https://www.comet.com/gpthouse/api"
+export GPTHOUSE_API_KEY="your_api_key"
+export GPTHOUSE_WORKSPACE="your_workspace_name"
+export GPTHOUSE_URL_OVERRIDE="https://www.comet.com/gpthouse/api"
 ```
 
 Then use them in your code:
@@ -717,17 +717,17 @@ Then use them in your code:
     
     # Or for direct REST API calls
     headers = {
-        "Authorization": os.getenv('OPIK_API_KEY'),
-        "Comet-Workspace": os.getenv('OPIK_WORKSPACE')
+        "Authorization": os.getenv('GPTHOUSE_API_KEY'),
+        "Comet-Workspace": os.getenv('GPTHOUSE_WORKSPACE')
     }
     ```
   </Tab>
   <Tab value="Bash" title="Bash">
     ```bash
-    curl -X PUT "${OPIK_URL_OVERRIDE}/v1/private/experiments/items/bulk" \
+    curl -X PUT "${GPTHOUSE_URL_OVERRIDE}/v1/private/experiments/items/bulk" \
       -H "Content-Type: application/json" \
-      -H "Comet-Workspace: ${OPIK_WORKSPACE}" \
-      -H "authorization: ${OPIK_API_KEY}" \
+      -H "Comet-Workspace: ${GPTHOUSE_WORKSPACE}" \
+      -H "authorization: ${GPTHOUSE_API_KEY}" \
       -d '{ ... }'
     ```
   </Tab>

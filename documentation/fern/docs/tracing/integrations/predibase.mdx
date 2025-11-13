@@ -61,7 +61,7 @@ import os
 from langchain_community.llms import Predibase
 from gpthouse.integrations.langchain import GPTHOUSETracer
 
-os.environ["OPIK_PROJECT_NAME"] = "predibase-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "predibase-integration-demo"
 
 # Create the GPTHOUSE tracer
 gpthouse_tracer = GPTHOUSETracer(tags=["predibase", "langchain"])

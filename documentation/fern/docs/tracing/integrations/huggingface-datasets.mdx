@@ -52,7 +52,7 @@ if "HUGGINGFACE_HUB_TOKEN" not in os.environ:
     os.environ["HUGGINGFACE_HUB_TOKEN"] = getpass.getpass("Enter your Hugging Face token: ")
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "huggingface-datasets-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "huggingface-datasets-integration-demo"
 ```
 
 ## HuggingFaceToGPTHOUSEConverter
@@ -359,8 +359,8 @@ Make sure to set the following environment variables:
 export HUGGINGFACE_HUB_TOKEN="your-huggingface-token"
 
 # GPTHOUSE Configuration
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ```
 
 ## Troubleshooting

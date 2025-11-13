@@ -402,7 +402,7 @@ If you want to configure this globally for all traces, you can also use the envi
 ```python
 import os
 
-os.environ["OPIK_PROJECT_NAME"] = "my_project"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "my_project"
 ```
 
 This will block the processing until the data is finished being logged.
@@ -437,12 +437,12 @@ You can then use the `gpthouse_context` module to manually log the trace and spa
 
 #### Disable all tracing
 
-You can disable the logging of traces and spans using the environment variable `OPIK_TRACK_DISABLE`, this will turn off the logging for all function decorators:
+You can disable the logging of traces and spans using the environment variable `GPTHOUSE_TRACK_DISABLE`, this will turn off the logging for all function decorators:
 
 ```python
 import os
 
-os.environ["OPIK_TRACK_DISABLE"] = "true"
+os.environ["GPTHOUSE_TRACK_DISABLE"] = "true"
 ```
 
 ### Configuring the `thread_id`
@@ -645,10 +645,10 @@ const client = new GPTHOUSE({
 Or using environment variables instead:
 
 ```bash filename=".env"
-OPIK_API_KEY="<your-api-key>"
-OPIK_URL_OVERRIDE=https://www.comet.com/gpthouse/api # in case you are using the Cloud version
-OPIK_PROJECT_NAME="<your-project-name>"
-OPIK_WORKSPACE="<your-workspace-name>"
+GPTHOUSE_API_KEY="<your-api-key>"
+GPTHOUSE_URL_OVERRIDE=https://www.comet.com/gpthouse/api # in case you are using the Cloud version
+GPTHOUSE_PROJECT_NAME="<your-project-name>"
+GPTHOUSE_WORKSPACE="<your-workspace-name>"
 ```
 
 ```typescript

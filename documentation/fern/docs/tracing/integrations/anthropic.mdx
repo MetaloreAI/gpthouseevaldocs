@@ -90,7 +90,7 @@ import anthropic
 from gpthouse import track
 from gpthouse.integrations.anthropic import track_anthropic
 
-os.environ["OPIK_PROJECT_NAME"] = "anthropic-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "anthropic-integration-demo"
 
 anthropic_client = anthropic.Anthropic()
 anthropic_client = track_anthropic(anthropic_client)

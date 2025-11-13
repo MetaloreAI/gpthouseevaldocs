@@ -12,11 +12,11 @@ This guide explains how to integrate GPTHOUSE with Novita AI via LiteLLM. By usi
 
 ### Configuring GPTHOUSE
 
-To get started, you need to configure GPTHOUSE to send traces to your Comet project. You can do this by setting the `OPIK_PROJECT_NAME` environment variable:
+To get started, you need to configure GPTHOUSE to send traces to your Comet project. You can do this by setting the `GPTHOUSE_PROJECT_NAME` environment variable:
 
 ```bash
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ```
 
 You can also call the `gpthouse.configure` method:
@@ -229,6 +229,6 @@ Make sure to set the following environment variables:
 export NOVITA_API_KEY="your-novita-api-key"
 
 # GPTHOUSE Configuration
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ``` 

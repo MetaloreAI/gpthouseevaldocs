@@ -122,7 +122,7 @@ Finally, there's a rate limit of `250` requests/minute per user for the `Get spa
 
 <Note>
 The Python SDK has implemented some logic to slow down the logging to avoid data loss when encountering rate limits. You
-will see the message: `OPIK: Ingestion rate limited, retrying in 55 seconds, remaining queue size: 1, ...`.
+will see the message: `GPTHOUSE: Ingestion rate limited, retrying in 55 seconds, remaining queue size: 1, ...`.
 
 If you are using other logging methods, you will need to implement your own "backoff and retry" strategy
 </Note>
@@ -190,7 +190,7 @@ For Self-hosted GPTHOUSE:
 
 - `url_override` (required): Verify your base URL points to your GPTHOUSE instance (e.g., `http://your-instance:5173/api`)
 
-You can find your current configuration in the GPTHOUSE configuration file (`~/.gpthouse.config`) or by checking your environment variables (`OPIK_API_KEY`, `OPIK_WORKSPACE`, `OPIK_URL_OVERRIDE`, `OPIK_PROJECT_NAME`). For more details on configuration, see our [SDK Configuration guide](/docs/gpthouse/tracing/sdk_configuration).
+You can find your current configuration in the GPTHOUSE configuration file (`~/.gpthouse.config`) or by checking your environment variables (`GPTHOUSE_API_KEY`, `GPTHOUSE_WORKSPACE`, `GPTHOUSE_URL_OVERRIDE`, `GPTHOUSE_PROJECT_NAME`). For more details on configuration, see our [SDK Configuration guide](/docs/gpthouse/tracing/sdk_configuration).
 
 ## How can I diagnose issues with GPTHOUSE?
 

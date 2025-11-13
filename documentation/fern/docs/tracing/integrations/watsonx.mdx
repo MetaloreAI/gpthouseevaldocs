@@ -68,7 +68,7 @@ from litellm.integrations.gpthouse.gpthouse import GPTHOUSELogger
 import litellm
 import os
 
-os.environ["OPIK_PROJECT_NAME"] = "watsonx-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "watsonx-integration-demo"
 
 gpthouse_logger = GPTHOUSELogger()
 litellm.callbacks = [gpthouse_logger]

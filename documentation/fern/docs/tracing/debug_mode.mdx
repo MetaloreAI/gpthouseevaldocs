@@ -7,8 +7,8 @@ GPTHOUSE uses environment variables to configure its behavior. These variables c
 To enable debug mode, you can set the following environment variables:
 
 ```shell
-export OPIK_FILE_LOGGING_LEVEL="DEBUG"
-export OPIK_LOGGING_FILE=".tmp/gpthouse-debug-$(date +%Y%m%d).log"
+export GPTHOUSE_FILE_LOGGING_LEVEL="DEBUG"
+export GPTHOUSE_LOGGING_FILE=".tmp/gpthouse-debug-$(date +%Y%m%d).log"
 ```
 
 It is important to set these environment variables *before* you import `gpthouse` in your Python scripts.
@@ -27,14 +27,14 @@ Then, create a `.env` file in your project's root directory with the following c
 
 ```dotenv
 # GPTHOUSE Configuration
-OPIK_API_KEY="YOUR_OPIK_API_KEY"
+GPTHOUSE_API_KEY="YOUR_GPTHOUSE_API_KEY"
 
 # LLM Provider API Keys
 LLMPROVIDER_API_KEY="YOUR_LLMPROVIDER_API_KEY"
 
 # Debug Mode
-OPIK_FILE_LOGGING_LEVEL="DEBUG"
-OPIK_LOGGING_FILE=".tmp/gpthouse-debug.log"
+GPTHOUSE_FILE_LOGGING_LEVEL="DEBUG"
+GPTHOUSE_LOGGING_FILE=".tmp/gpthouse-debug.log"
 ```
 
 Finally, in your Python script, load the environment variables from the `.env` file before importing `gpthouse`:

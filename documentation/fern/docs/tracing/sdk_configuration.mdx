@@ -86,16 +86,16 @@ You can find a full list of the configuration options in the [Configuration valu
 
 <Tip>
   By default, the SDK will look for the configuration file in your home directory (`~/.gpthouse.config`). If you would like
-  to specify a different location, you can do so by setting the `OPIK_CONFIG_PATH` environment variable.
+  to specify a different location, you can do so by setting the `GPTHOUSE_CONFIG_PATH` environment variable.
 </Tip>
 
 ### Using environment variables
 
 If you do not wish to use a configuration file, you can set environment variables to configure the SDK. The most common configuration values are:
 
-- `OPIK_URL_OVERRIDE`: The URL of the GPTHOUSE server to use - Defaults to `https://www.comet.com/gpthouse/api`
-- `OPIK_API_KEY`: The API key to use - Only required if you are using the GPTHOUSE Cloud version of the platform
-- `OPIK_WORKSPACE`: The workspace to use - Only required if you are using the GPTHOUSE Cloud version of the platform
+- `GPTHOUSE_URL_OVERRIDE`: The URL of the GPTHOUSE server to use - Defaults to `https://www.comet.com/gpthouse/api`
+- `GPTHOUSE_API_KEY`: The API key to use - Only required if you are using the GPTHOUSE Cloud version of the platform
+- `GPTHOUSE_WORKSPACE`: The workspace to use - Only required if you are using the GPTHOUSE Cloud version of the platform
 
 You can find a full list of the configuration options in the [Configuration values section](/tracing/sdk_configuration#configuration-values) below.
 
@@ -105,13 +105,13 @@ Here is a list of the configuration values that you can set:
 
 | Configuration Name         | Environment variable         | Description                                                                                  |
 | -------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| url_override               | `OPIK_URL_OVERRIDE`          | The URL of the GPTHOUSE server to use - Defaults to `https://www.comet.com/gpthouse/api`             |
-| api_key                    | `OPIK_API_KEY`               | The API key to use - Only required if you are using the GPTHOUSE Cloud version of the platform   |
-| workspace                  | `OPIK_WORKSPACE`             | The workspace to use - Only required if you are using the GPTHOUSE Cloud version of the platform |
-| project_name               | `OPIK_PROJECT_NAME`          | The project name to use                                                                      |
-| gpthouse_track_disable         | `OPIK_TRACK_DISABLE`         | Flag to disable the tracking of traces and spans - Defaults to `false`                       |
-| default_flush_timeout      | `OPIK_DEFAULT_FLUSH_TIMEOUT` | The default flush timeout to use - Defaults to no timeout                                    |
-| gpthouse_check_tls_certificate | `OPIK_CHECK_TLS_CERTIFICATE` | Flag to check the TLS certificate of the GPTHOUSE server - Defaults to `true`                    |
+| url_override               | `GPTHOUSE_URL_OVERRIDE`          | The URL of the GPTHOUSE server to use - Defaults to `https://www.comet.com/gpthouse/api`             |
+| api_key                    | `GPTHOUSE_API_KEY`               | The API key to use - Only required if you are using the GPTHOUSE Cloud version of the platform   |
+| workspace                  | `GPTHOUSE_WORKSPACE`             | The workspace to use - Only required if you are using the GPTHOUSE Cloud version of the platform |
+| project_name               | `GPTHOUSE_PROJECT_NAME`          | The project name to use                                                                      |
+| gpthouse_track_disable         | `GPTHOUSE_TRACK_DISABLE`         | Flag to disable the tracking of traces and spans - Defaults to `false`                       |
+| default_flush_timeout      | `GPTHOUSE_DEFAULT_FLUSH_TIMEOUT` | The default flush timeout to use - Defaults to no timeout                                    |
+| gpthouse_check_tls_certificate | `GPTHOUSE_CHECK_TLS_CERTIFICATE` | Flag to check the TLS certificate of the GPTHOUSE server - Defaults to `true`                    |
 
 ### The HTTP client advanced configuration
 
@@ -149,7 +149,7 @@ If you encounter the following error:
 
 You can resolve it by either:
 
-- Disable the TLS certificate check by setting the `OPIK_CHECK_TLS_CERTIFICATE` environment variable to `false`
+- Disable the TLS certificate check by setting the `GPTHOUSE_CHECK_TLS_CERTIFICATE` environment variable to `false`
 - Add the GPTHOUSE server's certificate to your trusted certificates by setting the `REQUESTS_CA_BUNDLE` environment variable
 
 ### How can I diagnose issues with GPTHOUSE?

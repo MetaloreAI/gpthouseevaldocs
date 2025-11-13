@@ -19,10 +19,10 @@ const result = await generateText({
 To collect the traces in GPTHOUSE, you need to add the `GPTHOUSEExporter` to your application, first you have to set your environment variables
 
 ```bash filename=".env"
-OPIK_API_KEY="<gpthouse-api-key>"
-OPIK_URL_OVERRIDE=https://www.comet.com/gpthouse/api # in case you are using the Cloud version
-OPIK_PROJECT_NAME="<custom-project-name>"
-OPIK_WORKSPACE="<your-workspace>"
+GPTHOUSE_API_KEY="<gpthouse-api-key>"
+GPTHOUSE_URL_OVERRIDE=https://www.comet.com/gpthouse/api # in case you are using the Cloud version
+GPTHOUSE_PROJECT_NAME="<custom-project-name>"
+GPTHOUSE_WORKSPACE="<your-workspace>"
 OPENAI_API_KEY="<openai-api-key>" # in case you are using an OpenAI model
 ```
 
@@ -138,5 +138,5 @@ const result = await generateText({
 Use the logger level to see the more verbose logs of the exporter.
 
 ```bash filename=".env"
-OPIK_LOG_LEVEL=DEBUG
+GPTHOUSE_LOG_LEVEL=DEBUG
 ```

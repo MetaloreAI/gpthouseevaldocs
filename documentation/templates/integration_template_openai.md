@@ -143,8 +143,8 @@ Make sure to set the following environment variables:
 export [INTEGRATION_API_KEY_NAME]="your-[integration-name]-api-key"
 
 # GPTHOUSE Configuration
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ```
 
 ## Results viewing

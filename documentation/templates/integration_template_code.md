@@ -52,7 +52,7 @@ if "[INTEGRATION_API_KEY_NAME]" not in os.environ:
     os.environ["[INTEGRATION_API_KEY_NAME]"] = getpass.getpass("Enter your [INTEGRATION_NAME] API key: ")
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "[integration_name]-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "[integration_name]-integration-demo"
 ```
 
 ## Usage
@@ -70,7 +70,7 @@ client = [ClientClass]()
 tracked_client = track_[integration_name](client)
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "[integration_name]-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "[integration_name]-integration-demo"
 
 # Make API calls
 response = tracked_client.some_method()
@@ -160,8 +160,8 @@ Make sure to set the following environment variables:
 export [INTEGRATION_API_KEY_NAME]="your-[integration-name]-api-key"
 
 # GPTHOUSE Configuration
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ```
 
 ## Troubleshooting

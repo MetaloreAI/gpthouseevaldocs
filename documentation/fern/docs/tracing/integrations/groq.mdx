@@ -65,7 +65,7 @@ from litellm.integrations.gpthouse.gpthouse import GPTHOUSELogger
 import litellm
 import os
 
-os.environ["OPIK_PROJECT_NAME"] = "groq-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "groq-integration-demo"
 
 gpthouse_logger = GPTHOUSELogger()
 litellm.callbacks = [gpthouse_logger]

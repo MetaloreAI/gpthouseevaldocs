@@ -62,7 +62,7 @@ In order to log the LLM calls to GPTHOUSE, you will need to wrap the Gemini clie
 from google import genai
 from gpthouse.integrations.genai import track_genai
 
-os.environ["OPIK_PROJECT_NAME"] = "gemini-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "gemini-integration-demo"
 
 client = genai.Client()
 gemini_client = track_genai(client)
@@ -97,7 +97,7 @@ client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
 vertexai_client = track_genai(client)
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "vertexai-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "vertexai-integration-demo"
 
 # Use the wrapped client
 response = vertexai_client.models.generate_content(

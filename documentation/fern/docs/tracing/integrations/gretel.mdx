@@ -52,7 +52,7 @@ if "GRETEL_API_KEY" not in os.environ:
     os.environ["GRETEL_API_KEY"] = getpass.getpass("Enter your Gretel API key: ")
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "gretel-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "gretel-integration-demo"
 ```
 
 ## Two Approaches Available
@@ -361,8 +361,8 @@ Make sure to set the following environment variables:
 export GRETEL_API_KEY="your-gretel-api-key"
 
 # GPTHOUSE Configuration
-export OPIK_PROJECT_NAME="your-project-name"
-export OPIK_WORKSPACE="your-workspace-name"
+export GPTHOUSE_PROJECT_NAME="your-project-name"
+export GPTHOUSE_WORKSPACE="your-workspace-name"
 ```
 
 ## Troubleshooting

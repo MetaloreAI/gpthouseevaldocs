@@ -27,12 +27,12 @@ module OpenTelemetryConfig
   def self.configure
 
     # This is the url for the GPTHOUSE API endpoint for Otel traces
-    gpthouse_endpoint = ENV.fetch('OPIK_OTEL_TRACES_ENDPOINT', 'https://www.comet.com/gpthouse/api/v1/private/otel/v1/traces')
+    gpthouse_endpoint = ENV.fetch('GPTHOUSE_OTEL_TRACES_ENDPOINT', 'https://www.comet.com/gpthouse/api/v1/private/otel/v1/traces')
     # Here you can set the GPTHOUSE API key, project name and workspace name
     # Set any default values but make sure to set them correctly in your environment variables
-    gpthouse_api_key = ENV.fetch('OPIK_API_KEY', '<any-api-key-value>')
-    gpthouse_project_name = ENV.fetch('OPIK_PROJECT_NAME', '<any-project-name-value>')
-    gpthouse_workspace_name = ENV.fetch('OPIK_COMET_WORKSPACE', '<default-workspace>')
+    gpthouse_api_key = ENV.fetch('GPTHOUSE_API_KEY', '<any-api-key-value>')
+    gpthouse_project_name = ENV.fetch('GPTHOUSE_PROJECT_NAME', '<any-project-name-value>')
+    gpthouse_workspace_name = ENV.fetch('GPTHOUSE_COMET_WORKSPACE', '<default-workspace>')
 
     # This is very important, you need to set the headers for the GPTHOUSE API calls to be able to authenticate against GPTHOUSE
     otlp_headers = {

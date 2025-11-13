@@ -64,7 +64,7 @@ from gpthouse.integrations.openai import track_openai
 from openai import OpenAI
 import os
 
-os.environ["OPIK_PROJECT_NAME"] = "openai-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "openai-integration-demo"
 
 client = OpenAI()
 openai_client = track_openai(client)
@@ -96,7 +96,7 @@ from gpthouse import track
 from gpthouse.integrations.openai import track_openai
 from openai import OpenAI
 
-os.environ["OPIK_PROJECT_NAME"] = "openai-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "openai-integration-demo"
 
 client = OpenAI()
 openai_client = track_openai(client)

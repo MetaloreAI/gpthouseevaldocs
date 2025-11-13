@@ -71,7 +71,7 @@ from agents import set_trace_processors
 from gpthouse.integrations.openai.agents import GPTHOUSETracingProcessor
 
 # Set project name for better organization
-os.environ["OPIK_PROJECT_NAME"] = "openai-agents-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "openai-agents-demo"
 
 set_trace_processors(processors=[GPTHOUSETracingProcessor()])
 

@@ -405,7 +405,7 @@ thread is inactive, meaning that no new traces are being created.
 
 <Note>
   By default, threads are marked as inactive after 15 minutes of inactivity. You can change this value by setting the
-  `OPIK_TRACE_THREAD_TIMEOUT_TO_MARK_AS_INACTIVE` environment variable (If you are using the GPTHOUSE self-hosted version).
+  `GPTHOUSE_TRACE_THREAD_TIMEOUT_TO_MARK_AS_INACTIVE` environment variable (If you are using the GPTHOUSE self-hosted version).
   On cloud, you can change this setting at workspace level.
 </Note>
 
@@ -470,7 +470,7 @@ Threads have a lifecycle that affects how you can interact with them:
 
 <Note>
   Threads automatically become inactive after 15 minutes of no new trace activity. This timeout can be configured: -
-  **Self-hosted**: Set `OPIK_TRACE_THREAD_TIMEOUT_TO_MARK_AS_INACTIVE` environment variable - **Cloud**: Configure at
+  **Self-hosted**: Set `GPTHOUSE_TRACE_THREAD_TIMEOUT_TO_MARK_AS_INACTIVE` environment variable - **Cloud**: Configure at
   workspace level in settings
 </Note>
 

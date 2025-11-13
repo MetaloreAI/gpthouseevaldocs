@@ -173,7 +173,7 @@ If you have multiple steps in your LLM pipeline, you can use the `@track` decora
 from gpthouse import track
 from gpthouse.integrations.bedrock import track_bedrock
 
-os.environ["OPIK_PROJECT_NAME"] = "bedrock-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "bedrock-integration-demo"
 bedrock_client = track_bedrock(bedrock)
 
 @track

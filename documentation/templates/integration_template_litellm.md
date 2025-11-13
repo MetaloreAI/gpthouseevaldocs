@@ -56,7 +56,7 @@ if "[PROVIDER_API_KEY_NAME]" not in os.environ:
     os.environ["[PROVIDER_API_KEY_NAME]"] = getpass.getpass("Enter your [PROVIDER_NAME] API key: ")
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "[provider_name]-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "[provider_name]-integration-demo"
 ```
 
 ## Logging LLM calls
@@ -71,7 +71,7 @@ gpthouse_logger = GPTHOUSELogger()
 litellm.callbacks = [gpthouse_logger]
 
 # Set project name for organization
-os.environ["OPIK_PROJECT_NAME"] = "[provider_name]-integration-demo"
+os.environ["GPTHOUSE_PROJECT_NAME"] = "[provider_name]-integration-demo"
 
 response = litellm.completion(
     model="[provider_model_name]",  # Replace with actual model name (e.g., "groq/llama3-8b-8192")
