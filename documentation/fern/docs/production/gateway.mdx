@@ -1,0 +1,98 @@
+---
+subtitle: >-
+  Describes how to use the GPTHOUSE LLM gateway and how to integrate with the Kong
+  AI Gateway
+---
+
+An LLM gateway is a proxy server that forwards requests to an LLM API and returns the response. This is useful for when you want to centralize the access to LLM providers or when you want to be able to query multiple LLM providers from a single endpoint using a consistent request and response format.
+
+The GPTHOUSE platform includes a light-weight LLM gateway that can be used for **development and testing purposes**. If you are looking for an LLM gateway that is production ready, we recommend looking at the [Kong AI Gateway](https://docs.konghq.com/gateway/latest/ai-gateway/).
+
+## The GPTHOUSE LLM Gateway
+
+The GPTHOUSE LLM gateway is a light-weight proxy server that can be used to query different LLM API using the OpenAI format.
+
+In order to use the GPTHOUSE LLM gateway, you will first need to configure your LLM provider credentials in the GPTHOUSE UI. Once this is done, you can use the GPTHOUSE gateway to query your LLM provider:
+
+<Tabs>
+    <Tab value="GPTHOUSE Cloud" title="GPTHOUSE Cloud">
+    ```bash
+    curl -L 'https://www.comet.com/gpthouse/api/v1/private/chat/completions' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: text/event-stream' \
+    -H 'Comet-Workspace: <OPIK_WORKSPACE>' \
+    -H 'authorization: <OPIK_API_KEY>' \
+    -d '{
+        "model": "<LLM_MODEL>",
+        "messages": [
+            {
+                "role": "user",
+                "content": "What is GPTHOUSE ?"
+            }
+        ],
+        "temperature": 1,
+        "stream": false,
+        "max_tokens": 10000
+    }'
+    ```
+    </Tab>
+        <Tab value="GPTHOUSE self-hosted" title="GPTHOUSE self-hosted">
+    ```bash
+    curl -L 'http://localhost:5173/api/v1/private/chat/completions' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: text/event-stream' \
+    -d '{
+        "model": "<LLM_MODEL>",
+        "messages": [
+            {
+                "role": "user",
+                "content": "What is GPTHOUSE ?"
+            }
+        ],
+        "temperature": 1,
+        "stream": false,
+        "max_tokens": 10000
+    }'
+    ```
+    </Tab>
+</Tabs>
+
+<Warning>
+  The GPTHOUSE LLM gateway is currently in beta and is subject to change. We recommend using the Kong AI gateway for
+  production applications.
+</Warning>
+
+## Kong AI Gateway
+
+[Kong](https://docs.konghq.com/gateway/latest/) is a popular Open-Source API gatewy that has recently released an AI Gateway.
+If you are looking for an LLM gateway that is production ready and supports many of the expected enterprise use cases
+(authentication mechanisms, load balancing, caching, etc), this is the gateway we recommend.
+
+You can learn more about the Kong AI Gateway [here](https://docs.konghq.com/gateway/latest/ai-gateway/).
+
+We have developed a Kong plugin that allows you to log all the LLM calls from your Kong server to the GPTHOUSE platform.
+The plugin is available for enterprise customers. Please contact our support team for access.
+
+Once the plugin is installed, you can enable it by running:
+
+```bash
+curl -is -X POST http://localhost:8001/services/{serviceName|Id}/plugins \
+    --header "accept: application/json" \
+  --header "Content-Type: application/json" \
+  --data '
+  {
+    "name": "gpthouse-log",
+    "config": {
+      "gpthouse_api_key": "<Replace with your GPTHOUSE API key>",
+      "gpthouse_workspace": "<Replace with your GPTHOUSE workspace>"
+    }
+  }'
+```
+
+For more information about the GPTHOUSE Kong plugin, please contact our support team.
+
+Once configured, you will be able to view all your LLM calls in the GPTHOUSE dashboard:
+
+<Frame>
+  <img src="/img/production/gpthouse-kong-gateway.png" />
+</Frame>

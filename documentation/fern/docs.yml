@@ -1,0 +1,1068 @@
+instances:
+  - url: https://gpthouse.docs.buildwithfern.com/docs/gpthouse
+    custom-domain: www.comet.com/docs/gpthouse/
+metadata:
+  # Core platform identity
+  og:site_name: "GPTHOUSE Documentation"
+  og:title: "GPTHOUSE LLM development Platform | Observability, Evaluation & Security"
+  og:description: "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards."
+  og:url: "https://www.comet.com/docs/gpthouse"
+  og:locale: "en_US"
+  twitter:title: "GPTHOUSE Documentation"
+  twitter:description: "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards."
+
+title: GPTHOUSE Documentation
+favicon: img/logo.svg
+
+js:
+  - path: ./add_cookbook_banner.js
+    strategy: afterInteractive
+css: ./styles.css
+
+analytics:
+  segment:
+    write-key: ${SEGMENT_WRITE_KEY}
+  gtm:
+    container-id: ${GTM_CONTAINER_ID}
+
+layout:
+  searchbar-placement: header
+  tabs-placement: header
+colors:
+  accent-primary:
+    light: "#2e8555"
+    dark: "#166534"
+  background:
+    light: "#FFFFFF"
+    dark: "#0b0d0e"
+logo:
+  light: img/gpthouse-logo.svg
+  dark: img/logo-dark-mode.svg
+  href: null
+  height: 28
+navbar-links:
+  - type: minimal
+    text: "Copy to LLM"
+    href: "https://www.comet.com/docs/gpthouse/llms-full.txt"
+  - type: minimal
+    text: "Github"
+    href: "https://github.com/comet-ml/gpthouse"
+  - type: filled
+    text: "Go to App"
+    href: "https://www.comet.com/gpthouse"
+tabs:
+  documentation:
+    display-name: Documentation
+    icon: fa-regular fa-building
+    slug: /
+  agent-optimization:
+    display-name: Agent Optimization
+    icon: fa-regular fa-robot
+    slug: /agent_optimization
+  integrations:
+    display-name: Integrations
+    icon: fa-regular fa-plug
+    slug: /integrations
+  self-host:
+    display-name: Self-hosting GPTHOUSE
+    icon: fa-regular fa-server
+    slug: /self-host
+  reference:
+    display-name: SDK & API reference
+    icon: fa-regular fa-square-terminal
+    slug: /reference
+  contributing:
+    display-name: Contributing
+    icon: fa-regular fa-code-branch
+    slug: /contributing
+  gpthouse-university:
+    display-name: GPTHOUSE University
+    icon: fa-regular fa-graduation-cap
+    slug: /gpthouse-university
+navigation:
+  - tab: documentation
+    layout:
+      - section: Getting Started
+        slug: /
+        contents:
+          - page: Home
+            path: docs/home.mdx
+            slug: /
+            icon: fa-regular fa-house
+          - page: Quickstart
+            path: docs/quickstart.mdx
+            slug: /quickstart
+            icon: fa-regular fa-bolt
+          - page: Quickstart notebook
+            path: docs/cookbook/quickstart_notebook.mdx
+            slug: quickstart_notebook
+            icon: fa-regular fa-play
+          - page: Roadmap
+            path: docs/roadmap.mdx
+            slug: roadmap
+            icon: fa-regular fa-map
+          - page: FAQ
+            path: docs/faq.mdx
+            slug: faq
+            icon: fa-regular fa-question
+          - changelog: docs/changelog
+            title: Changelog
+            slug: changelog
+            icon: fa-regular fa-calendar
+      - section: Observability
+        slug: /tracing
+        contents:
+          - page: Concepts
+            path: docs/tracing/concepts.mdx
+            slug: concepts
+          - page: Log traces
+            path: docs/tracing/log_traces.mdx
+            slug: log_traces
+          - page: GPTHOUSE Assist
+            path: docs/tracing/gpthouse_assist.mdx
+            slug: gpthouse_assist
+          - page: Debug Mode & Environment Variables
+            path: docs/tracing/debug_mode.mdx
+            slug: debug_mode
+          - page: Log conversations
+            path: docs/tracing/log_chat_conversations.mdx
+            slug: log_chat_conversations
+          - page: Log agents
+            path: docs/tracing/log_agents.mdx
+            slug: log_agents
+          - page: Log media & attachments
+            path: docs/tracing/log_multimodal_traces.mdx
+            slug: log_multimodal_traces
+          - page: Log distributed traces
+            path: docs/tracing/log_distributed_traces.mdx
+            slug: log_distributed_traces
+          - page: Annotate traces
+            path: docs/tracing/annotate_traces.mdx
+            slug: annotate_traces
+          - page: Cost tracking
+            path: docs/tracing/cost_tracking.mdx
+            slug: cost_tracking
+          - page: Supported models
+            path: docs/tracing/supported_models.mdx
+            slug: supported_models
+          - page: SDK configuration
+            path: docs/tracing/sdk_configuration.mdx
+            slug: sdk_configuration
+          - page: Dynamic tracing control
+            path: docs/cookbook/dynamic_tracing_cookbook.mdx
+            slug: dynamic_tracing_control
+          - page: Export data
+            path: docs/tracing/export_data.mdx
+            slug: export_data
+      - section: Evaluation
+        slug: /evaluation
+        contents:
+          - page: Overview
+            path: docs/evaluation/overview.mdx
+            slug: overview
+          - page: Concepts
+            path: docs/evaluation/concepts.mdx
+            slug: concepts
+          - page: Evaluate prompts
+            path: docs/evaluation/evaluate_prompt.mdx
+            slug: evaluate_prompt
+          - page: Evaluate your LLM application
+            path: docs/evaluation/evaluate_your_llm.mdx
+            slug: evaluate_your_llm
+          - page: Evaluate agents
+            path: docs/evaluation/evaluate_agents.mdx
+            slug: evaluate_agents
+          - page: Evaluate threads
+            path: docs/evaluation/evaluate_threads.mdx
+            slug: evaluate_threads
+          - page: Annotation Queues
+            path: docs/evaluation/annotation_queues.mdx
+            slug: annotation_queues
+          - page: Log experiments with REST API
+            path: docs/evaluation/log_experiments_with_rest_api.mdx
+            slug: log_experiments_with_rest_api
+          - page: Update existing experiment
+            path: docs/evaluation/update_existing_experiment.mdx
+            slug: update_existing_experiment
+          - page: Manage datasets
+            path: docs/evaluation/manage_datasets.mdx
+            slug: manage_datasets
+          - page: Cookbook - Evaluate hallucination metric
+            path: docs/cookbook/evaluate_hallucination_metric.mdx
+            slug: evaluate_hallucination_metric
+          - page: Cookbook - Evaluate moderation metric
+            path: docs/cookbook/evaluate_moderation_metric.mdx
+            slug: evaluate_moderation_metric
+          - section: Metrics
+            slug: /metrics
+            contents:
+              - page: Overview
+                path: docs/evaluation/metrics/overview.mdx
+                slug: overview
+              - page: Heuristic metrics
+                path: docs/evaluation/metrics/heuristic_metrics.mdx
+                slug: heuristic_metrics
+              - page: Hallucination
+                path: docs/evaluation/metrics/hallucination.mdx
+                slug: hallucination
+              - page: G-Eval
+                path: docs/evaluation/metrics/g_eval.mdx
+                slug: g_eval
+              - page: Moderation
+                path: docs/evaluation/metrics/moderation.mdx
+                slug: moderation
+              - page: Usefulness
+                path: docs/evaluation/metrics/usefulness.mdx
+                slug: usefulness
+              - page: Answer relevance
+                path: docs/evaluation/metrics/answer_relevance.mdx
+                slug: answer_relevance
+              - page: Context precision
+                path: docs/evaluation/metrics/context_precision.mdx
+                slug: context_precision
+              - page: Context recall
+                path: docs/evaluation/metrics/context_recall.mdx
+                slug: context_recall
+              - page: Conversational metrics
+                path: docs/evaluation/metrics/conversation_threads_metrics.mdx
+                slug: conversation_threads_metrics
+              - page: Custom model
+                path: docs/evaluation/metrics/custom_model.mdx
+                slug: custom_model
+              - page: Custom metric
+                path: docs/evaluation/metrics/custom_metric.mdx
+                slug: custom_metric
+      - section: Prompt engineering
+        slug: /prompt_engineering
+        contents:
+          - page: Prompt management
+            path: docs/prompt_engineering/prompt_management.mdx
+            slug: prompt_management
+          - page: GPTHOUSE's MCP server
+            path: docs/prompt_engineering/mcp_server.mdx
+            slug: mcp_server
+          - page: Prompt Playground
+            path: docs/prompt_engineering/playground.mdx
+            slug: playground
+      - section: Testing
+        slug: /testing
+        contents:
+          - page: Pytest integration
+            path: docs/testing/pytest_integration.mdx
+            slug: pytest_integration
+      - section: Production
+        slug: /production
+        contents:
+          - page: Production monitoring
+            path: docs/production/production_monitoring.mdx
+            slug: /production_monitoring
+          - page: Online Evaluation rules
+            path: docs/production/rules.mdx
+            slug: rules
+          - page: Gateway
+            path: docs/production/gateway.mdx
+            slug: gateway
+          - page: Guardrails
+            path: docs/production/guardrails.mdx
+            slug: guardrails
+      - section: Configuration
+        slug: /configuration
+        contents:
+          - page: Feedback definitions
+            path: docs/configuration/feedback_definitions.mdx
+            slug: /configuration/feedback_definitions
+          - page: AI Providers
+            path: docs/configuration/ai_providers.mdx
+            slug: ai_providers
+  - tab: agent-optimization
+    layout:
+      - page: GPTHOUSE Agent Optimizer
+        icon: fa-regular fa-house
+        path: docs/agent_optimization/overview.mdx
+        slug: overview
+      - section: GPTHOUSE Agent Optimizer Guide
+        slug: /gpthouse_optimizer
+        contents:
+          - page: Optimizer Quickstart
+            icon: fa-regular fa-bolt
+            path: docs/agent_optimization/gpthouse_optimizer/quickstart.mdx
+            slug: quickstart
+          - page: Optimizer Concepts
+            icon: fa-regular fa-lightbulb
+            path: docs/agent_optimization/gpthouse_optimizer/concepts.mdx
+            slug: concepts
+          - page: Datasets for Optimization
+            icon: fa-regular fa-database
+            path: docs/agent_optimization/gpthouse_optimizer/datasets.mdx
+            slug: datasets
+          - page: Models for Optimization
+            icon: fa-regular fa-rocket
+            path: docs/agent_optimization/gpthouse_optimizer/models.mdx
+            slug: models
+          - page: API Reference
+            icon: fa-regular fa-square-terminal
+            path: docs/agent_optimization/gpthouse_optimizer/reference.mdx
+            slug: reference
+          - page: Optimizer & SDK FAQ
+            icon: fa-regular fa-question
+            path: docs/agent_optimization/gpthouse_optimizer/faq.mdx
+            slug: faq
+      - section: Optimization Algorithms
+        slug: /algorithms
+        contents:
+          - page: Evolutionary Optimizer
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/evolutionary_optimizer.mdx
+            slug: evolutionary_optimizer
+          - page: Few-Shot Bayesian Optimizer
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/fewshot_bayesian_optimizer.mdx
+            slug: fewshot_bayesian_optimizer
+          - page: MetaPrompt Optimizer
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/metaprompt_optimizer.mdx
+            slug: metaprompt_optimizer
+          - page: MIPRO Optimizer
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/mipro_optimizer.mdx
+            slug: mipro_optimizer
+          - page: GEPA Optimizer
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/gepa_optimizer.mdx
+            slug: gepa_optimizer
+          - page: Tool Optimization (MCP & Function Calling)
+            icon: fa-regular fa-tools
+            path: docs/agent_optimization/algorithms/tool_optimization.mdx
+            slug: tool_optimization
+      - section: Optimization Best Practices
+        slug: /best_practices
+        contents:
+          - page: Prompt Engineering
+            icon: fa-regular fa-book
+            path: docs/agent_optimization/best_practices/prompt_engineering.mdx
+            slug: prompt_engineering
+      - section: Example Projects and Cookbooks
+        slug: /optimizer-cookbooks
+        contents:
+          - page: Introduction Example
+            icon: fa-regular fa-book
+            path: docs/agent_optimization/cookbook/optimizer_introduction_cookbook.mdx
+            slug: optimizer_introduction_cookbook
+          - page: Synthetic Data
+            icon: fa-regular fa-book
+            path: docs/agent_optimization/cookbook/synthetic_data_optimizer_cookbook.mdx
+            slug: synthetic_data_optimizer_cookbook
+      - section: Advanced Topics
+        slug: /advanced
+        contents:
+          - page: Extending Optimizers
+            icon: fa-regular fa-puzzle-piece
+            path: docs/agent_optimization/algorithms/extending_optimizers.mdx
+            slug: extending_optimizers
+  - tab: self-host
+    layout:
+      - page: Overview
+        path: docs/self-host/overview.mdx
+        slug: overview
+      - page: Local deployment
+        path: docs/self-host/local_deployment.mdx
+        slug: local_deployment
+      - page: Kubernetes deployment
+        path: docs/self-host/kubernetes.mdx
+        slug: kubernetes
+      - page: Platform Architecture
+        path: docs/self-host/architecture.mdx
+        slug: architecture
+      - page: Advanced clickhouse backup
+        path: docs/self-host/backup.mdx
+        slug: backup
+      - page: Scaling
+        path: docs/self-host/scaling.mdx
+        slug: scaling
+      - section: Configuration
+        slug: /configure
+        contents:
+          - page: Anonymous usage statistics
+            path: docs/self-host/configure/anonymous_usage_statistics.mdx
+            slug: anonymous_usage_statistics
+  - tab: integrations
+    layout:
+      - page: Overview
+        path: docs/tracing/integrations/overview.mdx
+        slug: overview
+      - section: Frameworks
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: AG2
+            path: docs/tracing/integrations/ag2.mdx
+            slug: ag2
+          - page: Agno
+            path: docs/tracing/integrations/agno.mdx
+            slug: agno
+          - page: Autogen
+            path: docs/tracing/integrations/autogen.mdx
+            slug: autogen
+          - page: BeeAI
+            path: docs/tracing/integrations/beeai.mdx
+            slug: beeai
+          - page: Crewai
+            path: docs/tracing/integrations/crewai.mdx
+            slug: crewai
+          - page: DSPY
+            path: docs/tracing/integrations/dspy.mdx
+            slug: dspy
+          - page: Google Agent Development Kit
+            path: docs/tracing/integrations/adk.mdx
+            slug: adk
+          - page: Haystack
+            path: docs/tracing/integrations/haystack.mdx
+            slug: haystack
+          - page: Instructor
+            path: docs/tracing/integrations/instructor.mdx
+            slug: instructor
+          - page: LangChain (Python)
+            path: docs/tracing/integrations/langchain.mdx
+            slug: langchain
+          - page: LangChain (JS/TS)
+            path: docs/tracing/integrations/langchainjs.mdx
+            slug: langchainjs
+          - page: LangGraph
+            path: docs/tracing/integrations/langgraph.mdx
+            slug: langgraph
+          - page: LiveKit Agents
+            path: docs/tracing/integrations/livekit.mdx
+            slug: livekit
+          - page: Llama Index
+            path: docs/tracing/integrations/llama_index.mdx
+            slug: llama_index
+          - page: Mastra
+            path: docs/tracing/integrations/mastra.mdx
+            slug: mastra
+          - page: OpenAI Agents
+            path: docs/tracing/integrations/openai_agents.mdx
+            slug: openai_agents
+          - page: Pipecat
+            path: docs/tracing/integrations/pipecat.mdx
+            slug: pipecat
+          - page: Pydantic AI
+            path: docs/tracing/integrations/pydantic-ai.mdx
+            slug: pydantic-ai
+          - page: Semantic Kernel
+            path: docs/tracing/integrations/semantic-kernel.mdx
+            slug: semantic-kernel
+          - page: Smolagents
+            path: docs/tracing/integrations/smolagents.mdx
+            slug: smolagents
+          - page: Spring AI
+            path: docs/tracing/integrations/spring-ai.mdx
+            slug: spring-ai
+          - page: Strands Agents
+            path: docs/tracing/integrations/strands-agents.mdx
+            slug: strands-agents
+          - page: Vercel AI SDK
+            path: docs/tracing/integrations/vercel-ai-sdk.mdx
+            slug: vercel-ai-sdk
+          - page: VoltAgent
+            path: docs/tracing/integrations/voltagent.mdx
+            slug: voltagent
+      - section: Model Providers
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Anthropic
+            path: docs/tracing/integrations/anthropic.mdx
+            slug: anthropic
+          - page: Bedrock
+            path: docs/tracing/integrations/bedrock.mdx
+            slug: bedrock
+          - page: BytePlus
+            path: docs/tracing/integrations/byteplus.mdx
+            slug: byteplus
+          - page: Cloudflare Workers AI
+            path: docs/tracing/integrations/cloudflare-workers-ai.mdx
+            slug: cloudflare-workers-ai
+          - page: Cohere
+            path: docs/tracing/integrations/cohere.mdx
+            slug: cohere
+          - page: DeepSeek
+            path: docs/tracing/integrations/deepseek.mdx
+            slug: deepseek
+          - page: Fireworks AI
+            path: docs/tracing/integrations/fireworks-ai.mdx
+            slug: fireworks-ai
+          - page: Gemini
+            path: docs/tracing/integrations/gemini.mdx
+            slug: gemini
+          - page: Groq
+            path: docs/tracing/integrations/groq.mdx
+            slug: groq
+          - page: Mistral AI
+            path: docs/tracing/integrations/mistral.mdx
+            slug: mistral
+          - page: Novita AI
+            path: docs/tracing/integrations/novita-ai.mdx
+            slug: novita-ai
+          - page: Ollama
+            path: docs/tracing/integrations/ollama.mdx
+            slug: ollama
+          - page: OpenAI (Python)
+            path: docs/tracing/integrations/openai.mdx
+            slug: openai
+          - page: OpenAI (JS/TS)
+            path: docs/tracing/integrations/openai-typescript.mdx
+            slug: openai-typescript
+          - page: Predibase
+            path: docs/tracing/integrations/predibase.mdx
+            slug: predibase
+          - page: Together AI
+            path: docs/tracing/integrations/together-ai.mdx
+            slug: together-ai
+          - page: WatsonX
+            path: docs/tracing/integrations/watsonx.mdx
+            slug: watsonx
+          - page: xAI Grok
+            path: docs/tracing/integrations/xai-grok.mdx
+            slug: xai-grok
+      - section: Manual Integration
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Python SDK
+            path: docs/reference/python-sdk/overview.mdx
+            slug: python-sdk
+          - page: TypeScript SDK
+            path: docs/reference/typescript-sdk/overview.mdx
+            slug: typescript-sdk
+          - page: OpenTelemetry
+            path: docs/tracing/opentelemetry/overview.mdx
+            slug: opentelemetry
+      - section: Dataset Management
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Gretel
+            path: docs/tracing/integrations/gretel.mdx
+            slug: gretel
+          - page: Hugging Face Datasets
+            path: docs/tracing/integrations/huggingface-datasets.mdx
+            slug: huggingface-datasets
+      - section: Evaluation
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Ragas
+            path: docs/tracing/integrations/ragas.mdx
+            slug: ragas
+      - section: Gateways
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: AISuite
+            path: docs/tracing/integrations/aisuite.mdx
+            slug: aisuite
+          - page: LiteLLM
+            path: docs/tracing/integrations/litellm.mdx
+            slug: litellm
+          - page: OpenRouter
+            path: docs/tracing/integrations/openrouter.mdx
+            slug: openrouter
+      - section: No-Code Tools
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Cursor
+            path: docs/tracing/integrations/cursor.mdx
+            slug: cursor
+          - page: Dify
+            path: docs/tracing/integrations/dify.mdx
+            slug: dify
+          - page: Flowise
+            path: docs/tracing/integrations/flowise.mdx
+            slug: flowise
+          # - page: Langflow
+          #   path: docs/tracing/integrations/langflow.mdx
+          #   slug: langflow
+          # - page: OpenWebUI
+          #   path: docs/tracing/integrations/openwebui.mdx
+          #   slug: openwebui
+      - section: OpenTelemetry
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: OpenTelemetry Overview
+            path: docs/tracing/opentelemetry/overview.mdx
+            slug: opentelemetry
+          - page: OpenTelemetry Python SDK
+            path: docs/tracing/opentelemetry/python-sdk.mdx
+            slug: opentelemetry-python-sdk
+          - page: OpenTelemetry Ruby SDK
+            path: docs/reference/ruby-otel-sdk/overview.mdx
+            slug: opentelemetry-ruby-sdk
+      - section: Other
+        skip-slug: true
+        collapsed: true
+        contents:
+          - page: Guardrails AI
+            path: docs/tracing/integrations/guardrails-ai.mdx
+            slug: guardrails-ai
+  - tab: reference
+    layout:
+      - page: Overview
+        path: docs/reference/overview.mdx
+        slug: overview
+      - section: Python SDK
+        slug: python-sdk
+        contents:
+          - link: Reference
+            href: https://www.comet.com/docs/gpthouse/python-sdk-reference/
+          - page: REST API Client
+            path: docs/reference/python-sdk/rest-api.mdx
+            slug: rest-api
+      - section: Typescript SDK
+        slug: typescript-sdk
+        contents:
+          - page: Overview
+            path: docs/reference/typescript-sdk/overview.mdx
+            slug: overview
+          - section: Evaluation
+            slug: evaluation
+            contents:
+              - page: Overview
+                path: docs/reference/typescript-sdk/evaluation/overview.mdx
+                slug: overview
+              - page: Quick Start
+                path: docs/reference/typescript-sdk/evaluation/quick-start.mdx
+                slug: quick-start
+              - page: Datasets
+                path: docs/reference/typescript-sdk/evaluation/datasets.mdx
+                slug: datasets
+              - page: Evaluate Function
+                path: docs/reference/typescript-sdk/evaluation/evaluate.mdx
+                slug: evaluate_function
+              - page: Metrics
+                path: docs/reference/typescript-sdk/evaluation/metrics.mdx
+                slug: metrics
+              - page: Experiments
+                path: docs/reference/typescript-sdk/evaluation/experiments.mdx
+                slug: experiments
+
+      - section: Rest API
+        slug: rest-api
+        contents:
+          - page: Overview
+            path: docs/reference/rest-api/overview.mdx
+            slug: overview
+          - api: API Reference
+            slug: /
+            display-errors: true
+  - tab: contributing
+    layout:
+      - page: Contribution Overview
+        path: docs/contributing/overview.mdx
+        slug: overview
+        icon: fa-regular fa-compass
+      - section: Specific Contribution Guides
+        slug: /guides
+        contents:
+          - page: Documentation
+            path: docs/contributing/documentation.mdx
+            slug: documentation
+            icon: fa-regular fa-book
+          - page: Python SDK
+            path: docs/contributing/python-sdk.mdx
+            slug: python-sdk
+            icon: fa-brands fa-python
+          - page: TypeScript SDK
+            path: docs/contributing/typescript-sdk.mdx
+            slug: typescript-sdk
+            icon: fa-brands fa-js
+          - page: GPTHOUSE Optimizer
+            path: docs/contributing/agent-optimizer-sdk.mdx
+            slug: agent-optimizer-sdk
+            icon: fa-regular fa-gauge-high
+          - page: Frontend
+            path: docs/contributing/frontend.mdx
+            slug: frontend
+            icon: fa-regular fa-window-maximize
+          - page: Backend
+            path: docs/contributing/backend.mdx
+            slug: backend
+            icon: fa-regular fa-server
+      - section: Developer Programs
+        slug: /developer-programs
+        contents:
+          - page: Bounty Program
+            path: docs/contributing/bounties.mdx
+            slug: bounties
+            icon: fa-regular fa-gem
+  - tab: gpthouse-university
+    layout:
+      - page: Overview
+        path: docs/gpthouse-university/overview.mdx
+        slug: overview
+        icon: fa-regular fa-graduation-cap
+      - section: Intro
+        slug: /intro
+        contents:
+          - page: GPTHOUSE Overview
+            path: docs/gpthouse-university/1_intro/1.1-intro-gpthouse-overview.mdx
+            slug: gpthouse-overview
+          - page: Next steps / Set expectations
+            path: docs/gpthouse-university/1_intro/1.2-intro-next-steps-set-expectations.mdx
+            slug: next-steps
+      - section: Observability
+        slug: /observability
+        contents:
+          - page: Log Traces
+            path: docs/gpthouse-university/2_observability/2.1-observability-log-traces.mdx
+            slug: log-traces
+          - page: Annotate Traces
+            path: docs/gpthouse-university/2_observability/2.2-observability-annotate-traces.mdx
+            slug: annotate-traces
+      - section: Evaluation
+        slug: /evaluation
+        contents:
+          - page: Evaluation Concepts and Overview
+            path: docs/gpthouse-university/3_evaluation/3.1-evaluation-concepts-overview.mdx
+            slug: concepts-overview
+          - page: Create Evaluation Datasets
+            path: docs/gpthouse-university/3_evaluation/3.2-evaluation-create-datasets.mdx
+            slug: create-datasets
+          - page: Define Evaluation Metrics
+            path: docs/gpthouse-university/3_evaluation/3.3-evaluation-define-metrics.mdx
+            slug: define-metrics
+          - page: Evaluate your LLM Application
+            path: docs/gpthouse-university/3_evaluation/3.4-evaluation-evaluate-llm-application.mdx
+            slug: evaluate-llm-app
+      - section: Prompt Engineering
+        slug: /prompt-engineering
+        contents:
+          - page: Prompt Management
+            path: docs/gpthouse-university/4_prompt-engineering/4.1-prompt-engineering-management.mdx
+            slug: prompt-management
+          - page: Prompt Playground
+            path: docs/gpthouse-university/4_prompt-engineering/4.2-prompt-engineering-playground.mdx
+            slug: prompt-playground
+      - section: Testing
+        slug: /testing
+        contents:
+          - page: PyTest Integration
+            path: docs/gpthouse-university/5_testing/5.1-testing-pytest-integration.mdx
+            slug: pytest-integration
+      - section: Production Monitoring
+        slug: /production-monitoring
+        contents:
+          - page: Online Evaluation Rules
+            path: docs/gpthouse-university/6_production-monitoring/6.1-production-monitoring-online-evaluation-rules.mdx
+            slug: online-evaluation-rules
+redirects:
+  - source: "/docs/gpthouse/playground"
+    destination: "/docs/gpthouse/prompt_engineering/playground"
+    permanent: true
+  - source: "/docs/gpthouse/reference/rest_api/:slug/"
+    destination: "/docs/gpthouse/reference/rest-api/overview"
+    permanent: true
+  - source: "/docs/gpthouse/reference/rest_api/gpthouse-rest-api/"
+    destination: "/docs/gpthouse/reference/rest-api/overview"
+    permanent: true
+  - source: "/docs/gpthouse/reference/rest_api/gpthouse-rest-api/:slug"
+    destination: "/docs/gpthouse/reference/rest-api/overview"
+    permanent: true
+  - source: "/docs/gpthouse/reference/rest_api/gpthouse-rest-api/:slug/:slug"
+    destination: "/docs/gpthouse/reference/rest-api/overview"
+    permanent: true
+  - source: "/docs/gpthouse/prompt_engineering/managing_prompts_in_code"
+    destination: "/docs/gpthouse/prompt_engineering/prompt_management"
+    permanent: true
+  - source: "/docs/gpthouse/prompt_engineering/prompt_optimization"
+    destination: "/docs/gpthouse/agent_optimization/best_practices/prompt_engineering"
+  # TypeScript SDK integration redirects
+  - source: "/docs/gpthouse/reference/typescript-sdk/integrations/vercel-ai-sdk"
+    destination: "/docs/gpthouse/integrations/vercel-ai-sdk"
+    permanent: true
+  - source: "/docs/gpthouse/reference/typescript-sdk/integrations/langchain"
+    destination: "/docs/gpthouse/integrations/langchainjs"
+    permanent: true
+  - source: "/docs/gpthouse/reference/typescript-sdk/integrations/openai"
+    destination: "/docs/gpthouse/integrations/openai-typescript"
+    permanent: true
+  - source: "/docs/gpthouse/reference/typescript-sdk/integrations/workers-ai"
+    destination: "/docs/gpthouse/integrations/cloudflare-workers-ai"
+    permanent: true
+  - source: "/docs/gpthouse/prompt_engineering/agent_optimization"
+    destination: "/docs/gpthouse/agent_optimization/overview"
+    permanent: true
+  - source: "/docs/gpthouse/prompt_engineering/agent_optimization"
+    destination: "/docs/gpthouse/agent_optimization/overview"
+    permanent: true
+  - source: "/docs/gpthouse/agent_optimization/best-practices/prompt_engineering"
+    destination: "/docs/gpthouse/agent_optimization/best_practices/prompt_engineering"
+    permanent: true
+  - source: "docs/agent_optimization/best-practices/prompt_engineering"
+    destination: "/docs/agent_optimization/best_practices/prompt_engineering"
+    permanent: true
+  - source: "docs/agent_optimization/gpthouse_optimizer/litellm_support"
+    destination: "/docs/agent_optimization/gpthouse_optimizer/models"
+    permanent: true
+  # Integration redirects - from /tracing/integrations/ to /integrations/ (clean URLs)
+  - source: "/docs/gpthouse/tracing/integrations/overview"
+    destination: "/docs/gpthouse/integrations/overview"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/ag2"
+    destination: "/docs/gpthouse/integrations/ag2"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/aisuite"
+    destination: "/docs/gpthouse/integrations/aisuite"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/agno"
+    destination: "/docs/gpthouse/integrations/agno"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/anthropic"
+    destination: "/docs/gpthouse/integrations/anthropic"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/autogen"
+    destination: "/docs/gpthouse/integrations/autogen"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/bedrock"
+    destination: "/docs/gpthouse/integrations/bedrock"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/beeai"
+    destination: "/docs/gpthouse/integrations/beeai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/byteplus"
+    destination: "/docs/gpthouse/integrations/byteplus"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/cloudflare-workers-ai"
+    destination: "/docs/gpthouse/integrations/cloudflare-workers-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/cohere"
+    destination: "/docs/gpthouse/integrations/cohere"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/cursor"
+    destination: "/docs/gpthouse/integrations/cursor"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/crewai"
+    destination: "/docs/gpthouse/integrations/crewai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/deepseek"
+    destination: "/docs/gpthouse/integrations/deepseek"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/dify"
+    destination: "/docs/gpthouse/integrations/dify"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/dspy"
+    destination: "/docs/gpthouse/integrations/dspy"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/fireworks-ai"
+    destination: "/docs/gpthouse/integrations/fireworks-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/flowise"
+    destination: "/docs/gpthouse/integrations/flowise"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/gemini"
+    destination: "/docs/gpthouse/integrations/gemini"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/groq"
+    destination: "/docs/gpthouse/integrations/groq"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/adk"
+    destination: "/docs/gpthouse/integrations/adk"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/guardrails-ai"
+    destination: "/docs/gpthouse/integrations/guardrails-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/haystack"
+    destination: "/docs/gpthouse/integrations/haystack"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/instructor"
+    destination: "/docs/gpthouse/integrations/instructor"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/langchainjs"
+    destination: "/docs/gpthouse/integrations/langchainjs"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/langgraph"
+    destination: "/docs/gpthouse/integrations/langgraph"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/langchain"
+    destination: "/docs/gpthouse/integrations/langchain"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/litellm"
+    destination: "/docs/gpthouse/integrations/litellm"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/livekit"
+    destination: "/docs/gpthouse/integrations/livekit"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/llama_index"
+    destination: "/docs/gpthouse/integrations/llama_index"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/mastra"
+    destination: "/docs/gpthouse/integrations/mastra"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/mistral"
+    destination: "/docs/gpthouse/integrations/mistral"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/novita-ai"
+    destination: "/docs/gpthouse/integrations/novita-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/ollama"
+    destination: "/docs/gpthouse/integrations/ollama"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/openai"
+    destination: "/docs/gpthouse/integrations/openai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/openai-typescript"
+    destination: "/docs/gpthouse/integrations/openai-typescript"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/openai_agents"
+    destination: "/docs/gpthouse/integrations/openai_agents"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/openrouter"
+    destination: "/docs/gpthouse/integrations/openrouter"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/predibase"
+    destination: "/docs/gpthouse/integrations/predibase"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/pydantic-ai"
+    destination: "/docs/gpthouse/integrations/pydantic-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/ragas"
+    destination: "/docs/gpthouse/integrations/ragas"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/semantic-kernel"
+    destination: "/docs/gpthouse/integrations/semantic-kernel"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/smolagents"
+    destination: "/docs/gpthouse/integrations/smolagents"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/spring-ai"
+    destination: "/docs/gpthouse/integrations/spring-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/strands-agents"
+    destination: "/docs/gpthouse/integrations/strands-agents"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/together-ai"
+    destination: "/docs/gpthouse/integrations/together-ai"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/vercel-ai-sdk"
+    destination: "/docs/gpthouse/integrations/vercel-ai-sdk"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/voltagent"
+    destination: "/docs/gpthouse/integrations/voltagent"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/watsonx"
+    destination: "/docs/gpthouse/integrations/watsonx"
+    permanent: true
+  - source: "/docs/gpthouse/tracing/integrations/xai-grok"
+    destination: "/docs/gpthouse/integrations/xai-grok"
+    permanent: true
+  # OpenTelemetry redirects
+  - source: "/docs/gpthouse/opentelemetry"
+    destination: "/docs/gpthouse/integrations/opentelemetry"
+    permanent: true
+  - source: "/docs/gpthouse/opentelemetry/overview"
+    destination: "/docs/gpthouse/integrations/opentelemetry"
+    permanent: true
+  - source: "/docs/gpthouse/opentelemetry/python-sdk"
+    destination: "/docs/gpthouse/integrations/opentelemetry-python-sdk"
+    permanent: true
+  - source: "/docs/gpthouse/reference/ruby-otel-sdk/overview"
+    destination: "/docs/gpthouse/integrations/opentelemetry-ruby-sdk"
+    permanent: true
+  # Cookbook redirects
+  - source: "/docs/gpthouse/cookbook/overview"
+    destination: "/docs/gpthouse/integrations/overview"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/aisuite"
+    destination: "/docs/gpthouse/integrations/aisuite"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/openai"
+    destination: "/docs/gpthouse/integrations/openai"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/openai-agents"
+    destination: "/docs/gpthouse/integrations/openai_agents"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/litellm"
+    destination: "/docs/gpthouse/integrations/litellm"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/langchain"
+    destination: "/docs/gpthouse/integrations/langchain"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/anthropic"
+    destination: "/docs/gpthouse/integrations/anthropic"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/bedrock"
+    destination: "/docs/gpthouse/integrations/bedrock"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/crewai"
+    destination: "/docs/gpthouse/integrations/crewai"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/dspy"
+    destination: "/docs/gpthouse/integrations/dspy"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/gemini"
+    destination: "/docs/gpthouse/integrations/gemini"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/google_adk_integration"
+    destination: "/docs/gpthouse/integrations/adk"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/gretel"
+    destination: "/docs/gpthouse/integrations/gretel"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/groq"
+    destination: "/docs/gpthouse/integrations/groq"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/guardrails-ai"
+    destination: "/docs/gpthouse/integrations/guardrails-ai"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/haystack"
+    destination: "/docs/gpthouse/integrations/haystack"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/instructor"
+    destination: "/docs/gpthouse/integrations/instructor"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/langgraph"
+    destination: "/docs/gpthouse/integrations/langgraph"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/llama-index"
+    destination: "/docs/gpthouse/integrations/llama_index"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/ollama"
+    destination: "/docs/gpthouse/integrations/ollama"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/predibase"
+    destination: "/docs/gpthouse/integrations/predibase"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/pydantic-ai"
+    destination: "/docs/gpthouse/integrations/pydantic-ai"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/ragas"
+    destination: "/docs/gpthouse/integrations/ragas"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/smolagents"
+    destination: "/docs/gpthouse/integrations/smolagents"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/vertexai"
+    destination: "/docs/gpthouse/integrations/gemini"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/evaluate_hallucination_metric"
+    destination: "/docs/gpthouse/evaluation/evaluate_hallucination_metric"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/evaluate_moderation_metric"
+    destination: "/docs/gpthouse/evaluation/evaluate_moderation_metric"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/dynamic_tracing_cookbook"
+    destination: "/docs/gpthouse/tracing/dynamic_tracing_control"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/quickstart_notebook"
+    destination: "/docs/gpthouse/quickstart_notebook"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/huggingface_datasets_integration"
+    destination: "/docs/gpthouse/integrations/huggingface-datasets"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook/watsonx"
+    destination: "/docs/gpthouse/integrations/watsonx"
+    permanent: true
+  - source: "/docs/gpthouse/cookbook"
+    destination: "/docs/gpthouse/integrations"
+    permanent: true

@@ -1,0 +1,191 @@
+---
+title: Observability for Predibase with GPTHOUSE
+description: Start here to integrate GPTHOUSE into your Predibase-based genai application for end-to-end LLM observability, unit testing, and optimization.
+---
+
+Predibase is a platform for fine-tuning and serving open-source Large Language Models (LLMs). It's built on top of open-source [LoRAX](https://loraexchange.ai/).
+
+## Account Setup
+
+[Comet](https://www.comet.com/site?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=predibase&utm_campaign=gpthouse) provides a hosted version of the GPTHOUSE platform, [simply create an account](https://www.comet.com/signup?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=predibase&utm_campaign=gpthouse) and grab your API Key.
+
+> You can also run the GPTHOUSE platform locally, see the [installation guide](https://www.comet.com/docs/gpthouse/self-host/overview/?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=predibase&utm_campaign=gpthouse) for more information.
+
+## Tracking your LLM calls
+
+Predibase can be used to serve open-source LLMs and is available as a model provider in LangChain. We will leverage the GPTHOUSE integration with LangChain to track the LLM calls made using Predibase models.
+
+## Getting Started
+
+### Installation
+
+To use the GPTHOUSE integration with Predibase, you'll need to have both the `gpthouse`, `predibase` and `langchain` packages installed. You can install them using pip:
+
+```bash
+pip install gpthouse predibase langchain
+```
+
+### Configuring GPTHOUSE
+
+Configure the GPTHOUSE Python SDK for your deployment type. See the [Python SDK Configuration guide](/tracing/sdk_configuration) for detailed instructions on:
+
+- **CLI configuration**: `gpthouse configure`
+- **Code configuration**: `gpthouse.configure()`
+- **Self-hosted vs Cloud vs Enterprise** setup
+- **Configuration files** and environment variables
+
+### Configuring Predibase
+
+You will also need to set the `PREDIBASE_API_TOKEN` environment variable to your Predibase API token. You can set it as an environment variable:
+
+```bash
+export PREDIBASE_API_TOKEN=<your-predibase-api-token>
+```
+
+Or set it programmatically:
+
+```python
+import os
+import getpass
+
+if "PREDIBASE_API_TOKEN" not in os.environ:
+    os.environ["PREDIBASE_API_TOKEN"] = getpass.getpass("Enter your Predibase API token: ")
+```
+
+## Logging LLM calls
+
+In order to log the LLM calls to GPTHOUSE, you will need to wrap the Predibase model with the `GPTHOUSETracer` from the LangChain integration. When making calls with that wrapped model, all calls will be logged to GPTHOUSE:
+
+```python
+import os
+from langchain_community.llms import Predibase
+from gpthouse.integrations.langchain import GPTHOUSETracer
+
+os.environ["OPIK_PROJECT_NAME"] = "predibase-integration-demo"
+
+# Create the GPTHOUSE tracer
+gpthouse_tracer = GPTHOUSETracer(tags=["predibase", "langchain"])
+
+# Create Predibase model
+model = Predibase(
+    model="mistral-7b",
+    predibase_api_key=os.environ.get("PREDIBASE_API_TOKEN"),
+)
+
+# Test the model with GPTHOUSE tracing
+response = model.invoke(
+    "Can you recommend me a nice dry wine?",
+    config={
+        "temperature": 0.5,
+        "max_new_tokens": 1024,
+        "callbacks": [gpthouse_tracer]
+    }
+)
+print(response)
+```
+
+In addition to passing the GPTHOUSETracer to the invoke method, you can also define it during the creation of the `Predibase` object:
+
+```python
+model = Predibase(
+    model="mistral-7b",
+    predibase_api_key=os.environ.get("PREDIBASE_API_TOKEN"),
+).with_config({"callbacks": [gpthouse_tracer]})
+```
+
+<Tip>
+  You can learn more about the GPTHOUSE integration with LangChain in our [LangChain integration
+  guide](/tracing/langchain).
+</Tip>
+
+The trace will now be available in the GPTHOUSE UI for further analysis.
+
+<Frame>
+  <img src="/img/tracing/predibase_gpthouse_trace.png" />
+</Frame>
+
+## Advanced Usage
+
+### SequentialChain Example
+
+Now, let's create a more complex chain and run it with GPTHOUSE tracing:
+
+```python
+from langchain.chains import LLMChain, SimpleSequentialChain
+from langchain_core.prompts import PromptTemplate
+
+# Synopsis chain
+template = """You are a playwright. Given the title of play, it is your job to write a synopsis for that title.
+
+Title: {title}
+Playwright: This is a synopsis for the above play:"""
+prompt_template = PromptTemplate(input_variables=["title"], template=template)
+synopsis_chain = LLMChain(llm=model, prompt=prompt_template)
+
+# Review chain
+template = """You are a play critic from the New York Times. Given the synopsis of play, it is your job to write a review for that play.
+
+Play Synopsis:
+{synopsis}
+Review from a New York Times play critic of the above play:"""
+prompt_template = PromptTemplate(input_variables=["synopsis"], template=template)
+review_chain = LLMChain(llm=model, prompt=prompt_template)
+
+# Overall chain
+overall_chain = SimpleSequentialChain(
+    chains=[synopsis_chain, review_chain], verbose=True
+)
+
+# Run the chain with GPTHOUSE tracing
+review = overall_chain.run("Tragedy at sunset on the beach", callbacks=[gpthouse_tracer])
+print(review)
+```
+
+### Accessing Logged Traces
+
+We can access the trace IDs collected by the GPTHOUSE tracer:
+
+```python
+traces = gpthouse_tracer.created_traces()
+print("Collected trace IDs:", [trace.id for trace in traces])
+
+# Flush traces to ensure all data is logged
+gpthouse_tracer.flush()
+```
+
+### Fine-tuned LLM Example
+
+Finally, let's use a fine-tuned model with GPTHOUSE tracing:
+
+**Note:** In order to use a fine-tuned model, you will need to have access to the model and the correct model ID. The code below will return a `NotFoundError` unless the `model` and `adapter_id` are updated.
+
+```python
+fine_tuned_model = Predibase(
+    model="my-base-LLM",
+    predibase_api_key=os.environ.get("PREDIBASE_API_TOKEN"),
+    predibase_sdk_version=None,
+    adapter_id="my-finetuned-adapter-id",
+    adapter_version=1,
+    **{
+        "api_token": os.environ.get("HUGGING_FACE_HUB_TOKEN"),
+        "max_new_tokens": 5,
+    },
+)
+
+# Configure the GPTHOUSE tracer
+fine_tuned_model = fine_tuned_model.with_config({"callbacks": [gpthouse_tracer]})
+
+# Invoke the fine-tuned model
+response = fine_tuned_model.invoke(
+    "Can you help categorize the following emails into positive, negative, and neutral?",
+    **{"temperature": 0.5, "max_new_tokens": 1024},
+)
+print(response)
+
+# Final flush to ensure all traces are logged
+gpthouse_tracer.flush()
+```
+
+## Tracking your fine-tuning training runs
+
+If you are using Predibase to fine-tune an LLM, we recommend using Predibase's integration with Comet's Experiment Management functionality. You can learn more about how to set this up in the [Comet integration guide](https://docs.predibase.com/user-guide/integrations/comet) in the Predibase documentation. If you are already using an Experiment Tracking platform, worth checking if it has an integration with Predibase.

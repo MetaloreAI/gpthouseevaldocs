@@ -1,0 +1,98 @@
+---
+title: Observability for Mistral AI with GPTHOUSE
+description: Start here to integrate GPTHOUSE into your Mistral AI-based genai application for end-to-end LLM observability, unit testing, and optimization.
+---
+
+[Mistral AI](https://mistral.ai/) provides cutting-edge large language models with excellent performance for text generation, reasoning, and specialized tasks like code generation.
+
+This guide explains how to integrate GPTHOUSE with Mistral AI via LiteLLM. By using the LiteLLM integration provided by GPTHOUSE, you can easily track and evaluate your Mistral API calls within your GPTHOUSE projects as GPTHOUSE will automatically log the input prompt, model used, token usage, and response generated.
+
+## Getting Started
+
+### Configuring GPTHOUSE
+
+To start tracking your Mistral AI LLM calls, you'll need to have both `gpthouse` and `litellm` installed. You can install them using pip:
+
+```bash
+pip install gpthouse litellm
+```
+
+In addition, you can configure GPTHOUSE using the `gpthouse configure` command which will prompt you for the correct local server address or if you are using the Cloud platform your API key:
+
+```bash
+gpthouse configure
+```
+
+### Configuring Mistral AI
+
+You'll need to set your Mistral AI API key as an environment variable:
+
+```bash
+export MISTRAL_API_KEY="YOUR_API_KEY"
+```
+
+## Logging LLM calls
+
+In order to log the LLM calls to GPTHOUSE, you will need to create the GPTHOUSELogger callback. Once the GPTHOUSELogger callback is created and added to LiteLLM, you can make calls to LiteLLM as you normally would:
+
+```python
+from litellm.integrations.gpthouse.gpthouse import GPTHOUSELogger
+import litellm
+
+gpthouse_logger = GPTHOUSELogger()
+litellm.callbacks = [gpthouse_logger]
+
+response = litellm.completion(
+    model="mistral/mistral-large-2407",
+    messages=[
+        {"role": "user", "content": "Why is tracking and evaluation of LLMs important?"}
+    ]
+)
+```
+
+## Logging LLM calls within a tracked function
+
+If you are using LiteLLM within a function tracked with the [`@track`](/tracing/log_traces#using-function-decorators) decorator, you will need to pass the `current_span_data` as metadata to the `litellm.completion` call:
+
+```python
+from gpthouse import track, gpthouse_context
+import litellm
+
+@track
+def generate_story(prompt):
+    response = litellm.completion(
+        model="mistral/mistral-large-2407",
+        messages=[{"role": "user", "content": prompt}],
+        metadata={
+            "gpthouse": {
+                "current_span_data": gpthouse_context.get_current_span_data(),
+            },
+        },
+    )
+    return response.choices[0].message.content
+
+
+@track
+def generate_topic():
+    prompt = "Generate a topic for a story about GPTHOUSE."
+    response = litellm.completion(
+        model="mistral/mistral-medium-2312",
+        messages=[{"role": "user", "content": prompt}],
+        metadata={
+            "gpthouse": {
+                "current_span_data": gpthouse_context.get_current_span_data(),
+            },
+        },
+    )
+    return response.choices[0].message.content
+
+
+@track
+def generate_gpthouse_story():
+    topic = generate_topic()
+    story = generate_story(topic)
+    return story
+
+
+generate_gpthouse_story()
+```

@@ -1,0 +1,64 @@
+---
+title: Observability for Cursor with GPTHOUSE
+description: Start here to integrate GPTHOUSE into your Cursor-based genai application for end-to-end LLM observability, unit testing, and optimization.
+---
+
+The Cursor extension for GPTHOUSE allows you to log all your Cursor conversations to GPTHOUSE. Once they are available in GPTHOUSE,
+you can easily review them and share them with your team.
+
+<Tip>
+  You can link your Cursor conversations to PR's by just adding an GPTHOUSE link, can be very useful when reviewing code
+  changes !
+</Tip>
+
+<Frame>
+  <img src="/img/tracing/cursor_gpthouse_thread.png" />
+</Frame>
+
+## Installation
+
+<Button intent="primary" href="cursor:extension/gpthouse.gpthouse">
+  Install Cursor extension
+</Button>
+
+You can also install the Cursor extension manually by navigating to the `Extensions` tab at the top of the file sidebar and search for `GPTHOUSE`.
+From there, simply click on the `Install` button.
+
+### Configuring the extension
+
+In order to use the extension, you will need to configure your GPTHOUSE API key. There are a few ways to do this:
+
+<Tabs>
+    <Tab title="Extension settings">
+    The most straightforward way to configure the extension is to use the extension settings.
+
+    When you install the extension, you will see the following modal in the bottom left of your screen:
+    <img src="/img/tracing/cursor_gpthouse_extension_settings.png" />
+
+    In this modal, click on `Open Settings` and paste your GPTHOUSE API key in the `GPTHOUSE: GPTHOUSE API Key` field.
+    You can find your API key in the [GPTHOUSE dashboard](https://www.comet.com/api/my/settings).
+
+    </Tab>
+    <Tab title="Configuration file">
+    You can also use a configuration file in your home directory (`~/.gpthouse.config`). While you can create the file manually (reference documentation can be
+    found [here](/tracing/sdk_configuration)), assuming you have the GPTHOUSE Python SDK installed we recommend using the `gpthouse configure` command to create
+    the file for you.
+    </Tab>
+
+</Tabs>
+
+Once the extension is installed, all your new Cursor conversations will be logged to GPTHOUSE.
+
+## MCP Server Integration
+
+The extension automatically registers an GPTHOUSE MCP (Model Context Protocol) server with Cursor when you have an API key configured. This enables Cursor's AI to access your GPTHOUSE project data during conversations, providing enhanced context about your traces and experiments.
+
+The MCP server integration is enabled by default and requires no additional configuration. For more details about the MCP server, see the [gpthouse-mcp package](https://www.npmjs.com/package/gpthouse-mcp).
+
+## Viewing your conversations
+
+Once the extension is installed and configured, all your conversations will be available in the `cursor` project in GPTHOUSE. To
+view the full conversation, you can navigate to the `threads` tab and click on any of the chats.
+
+You can also review individual LLM responses by clicking on a trace in the `traces` tab. In the traces sidebar view, you can
+see the full cursor event data in the metadata section.

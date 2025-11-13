@@ -1,0 +1,81 @@
+---
+subtitle: High-level overview on how to self-host GPTHOUSE
+---
+
+You can use GPTHOUSE through [Comet's Managed Cloud offering](https://comet.com/site) or you can self-host GPTHOUSE on your own infrastructure. When choosing to self-host GPTHOUSE, you get access to all GPTHOUSE features including tracing, evaluation, etc but without user management features.
+
+If you choose to self-host GPTHOUSE, you can choose between two deployment options:
+
+1. [Local installation](/self-host/local_deployment): Perfect to get started but not production-ready.
+2. [Kubernetes installation](/self-host/kubernetes): Production ready GPTHOUSE platform that runs on a Kubernetes cluster.
+
+## Getting started
+
+If you would like to try out GPTHOUSE locally, we recommend using our Local installation
+script. Assuming you have `git` and `docker` installed, you can get started with
+just one line of code:
+
+<Tabs>
+ <Tab value="Linux / Mac" title="Linux / Mac">
+```bash
+# Clone the GPTHOUSE repository
+git clone https://github.com/comet-ml/gpthouse.git
+
+# Navigate to the gpthouse folder
+
+cd gpthouse
+
+# Start the GPTHOUSE platform
+
+./gpthouse.sh
+
+````
+
+</Tab>
+<Tab value="Windows" title="Windows">
+
+```powershell
+# Clone the GPTHOUSE repository
+git clone https://github.com/comet-ml/gpthouse.git
+
+# Navigate to the gpthouse folder
+cd gpthouse
+
+# Start the GPTHOUSE platform
+powershell -ExecutionPolicy ByPass -c ".\gpthouse.ps1"
+````
+
+</Tab>
+</Tabs>
+
+GPTHOUSE will now be available at
+
+<a href="http://localhost:5173" target="_blank">
+  http://localhost:5173
+</a>
+and all traces logged from your local machine will be logged to this local GPTHOUSE instance. In order for traces and other data
+to be logged to your GPTHOUSE instance, you need to make sure that the GPTHOUSE Python SDK is configured to point to the GPTHOUSE server
+you just started. You can do this by running the following command:
+
+```bash
+# Configure the Python SDK to point to the local GPTHOUSE platform
+export OPIK_BASE_URL=http://localhost:5173/api
+```
+
+or in Python:
+
+```python
+import os
+
+os.environ["OPIK_BASE_URL"] = "http://localhost:5173/api"
+```
+
+To learn more about how to manage you local GPTHOUSE deployment, you can refer to our [local deployment guide](/self-host/local_deployment).
+
+## Advanced deployment options
+
+If you would like to deploy GPTHOUSE on a Kubernetes cluster, we recommend following our Kubernetes deployment guide [here](/self-host/kubernetes).
+
+## Comet managed deployments
+
+The GPTHOUSE platform is being developed and maintained by the Comet team. If you are looking for a managed deployment solution, feel free to reach out to the Comet team at sales@comet.com or visit the [Comet website](https://comet.com/site) to learn more.

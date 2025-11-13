@@ -1,0 +1,100 @@
+The GPTHOUSE TypeScript SDK provides a powerful and easy-to-use interface for tracing, monitoring, and debugging your JavaScript and TypeScript applications. It offers comprehensive observability for LLM applications, agent workflows, and AI-powered systems.
+
+## Integrations
+
+GPTHOUSE provides seamless integrations with popular JavaScript/TypeScript frameworks and libraries:
+
+- **[LangChain (JS/TS)](/integrations/langchainjs)** - Trace and monitor your LangChain applications, including chains, agents, tools, and retrievers
+- **[OpenAI (JS/TS)](/integrations/openai-typescript)** - Trace and monitor your applications using the official OpenAI Node.js SDK
+- **[Vercel AI SDK](/integrations/vercel-ai-sdk)** - Integrate GPTHOUSE with Vercel AI SDK for monitoring AI-powered applications
+- **[Cloudflare Workers AI](/integrations/cloudflare-workers-ai)** - Trace and monitor your Cloudflare Workers AI applications
+
+For a complete list of available integrations, see the [Integrations Overview](/integrations/overview).
+
+## Installation
+
+You can install the `gpthouse` package using your favorite package manager.
+
+```bash
+npm install gpthouse
+```
+
+## GPTHOUSE Configuration
+
+You can configure the GPTHOUSE client using environment variables.
+
+```bash
+export OPIK_API_KEY="your-api-key"
+
+# If running on GPTHOUSE Cloud
+export OPIK_URL_OVERRIDE="https://www.comet.com/gpthouse/api"
+
+# If running locally
+export OPIK_URL_OVERRIDE="http://localhost:5173/api"
+
+export OPIK_PROJECT_NAME="your-project-name"
+export OPIK_WORKSPACE_NAME="your-workspace-name"
+```
+
+Or you can pass the configuration to the GPTHOUSE client constructor.
+
+```typescript
+import { GPTHOUSE } from "gpthouse";
+
+const client = new GPTHOUSE({
+  apiKey: "<your-api-key>",
+  apiUrl: "https://www.comet.com/gpthouse/api",
+  projectName: "<your-project-name>",
+  workspaceName: "<your-workspace-name>",
+});
+```
+
+## Usage
+
+<Tip>You can find the full Typescript reference documentation [here](https://www.jsdocs.io/package/gpthouse).</Tip>
+
+```typescript
+import { GPTHOUSE } from "gpthouse";
+
+// Create a new GPTHOUSE client with your configuration
+const client = new GPTHOUSE();
+
+// Log 10 traces
+for (let i = 0; i < 10; i++) {
+  const someTrace = client.trace({
+    name: `Trace ${i}`,
+    input: {
+      prompt: `Hello, world! ${i}`,
+    },
+    output: {
+      response: `Hello, world! ${i}`,
+    },
+  });
+
+  // For each trace, log 10 spans
+  for (let j = 0; j < 10; j++) {
+    const someSpan = someTrace.span({
+      name: `Span ${i}-${j}`,
+      type: "llm",
+      input: {
+        prompt: `Hello, world! ${i}:${j}`,
+      },
+      output: {
+        response: `Hello, world! ${i}:${j}`,
+      },
+    });
+
+    // Some LLM work
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    // Mark the span as ended
+    someSpan.end();
+  }
+
+  // Mark the trace as ended
+  someTrace.end();
+}
+
+// Flush the client to send all traces and spans
+await client.flush();
+```

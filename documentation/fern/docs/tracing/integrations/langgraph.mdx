@@ -1,0 +1,255 @@
+---
+title: Observability for LangGraph with GPTHOUSE
+description: Start here to integrate GPTHOUSE into your LangGraph-based genai application for end-to-end LLM observability, unit testing, and optimization.
+---
+
+GPTHOUSE provides a seamless integration with LangGraph, allowing you to easily log and trace your LangGraph-based applications. By using the `GPTHOUSETracer` callback, you can automatically capture detailed information about your LangGraph graph executions during both development and production.
+
+## Account Setup
+
+[Comet](https://www.comet.com/site?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=langgraph&utm_campaign=gpthouse) provides a hosted version of the GPTHOUSE platform, [simply create an account](https://www.comet.com/signup?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=langgraph&utm_campaign=gpthouse) and grab your API Key.
+
+> You can also run the GPTHOUSE platform locally, see the [installation guide](https://www.comet.com/docs/gpthouse/self-host/overview/?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=langgraph&utm_campaign=gpthouse) for more information.
+
+## Getting Started
+
+### Installation
+
+To use the [`GPTHOUSETracer`](https://www.comet.com/docs/gpthouse/python-sdk-reference/integrations/langchain/GPTHOUSETracer.html) with LangGraph, you'll need to have both the `gpthouse` and `langgraph` packages installed. You can install them using pip:
+
+```bash
+pip install gpthouse langgraph langchain
+```
+
+### Configuring GPTHOUSE
+
+Configure the GPTHOUSE Python SDK for your deployment type. See the [Python SDK Configuration guide](/tracing/sdk_configuration) for detailed instructions on:
+
+- **CLI configuration**: `gpthouse configure`
+- **Code configuration**: `gpthouse.configure()`
+- **Self-hosted vs Cloud vs Enterprise** setup
+- **Configuration files** and environment variables
+
+## Using the GPTHOUSETracer
+
+You can use the [`GPTHOUSETracer`](https://www.comet.com/docs/gpthouse/python-sdk-reference/integrations/langchain/GPTHOUSETracer.html) callback with any LangGraph graph by passing it in as an argument to the `stream` or `invoke` functions:
+
+```python
+from typing import List, Annotated
+from pydantic import BaseModel
+from gpthouse.integrations.langchain import GPTHOUSETracer
+from langchain_core.messages import HumanMessage
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+
+# create your LangGraph graph
+class State(BaseModel):
+    messages: Annotated[list, add_messages]
+
+def chatbot(state):
+    # Typically your LLM calls would be done here
+    return {"messages": "Hello, how can I help you today?"}
+
+graph = StateGraph(State)
+graph.add_node("chatbot", chatbot)
+graph.add_edge(START, "chatbot")
+graph.add_edge("chatbot", END)
+app = graph.compile()
+
+# Create the GPTHOUSETracer
+gpthouse_tracer = GPTHOUSETracer(graph=app.get_graph(xray=True))
+
+# Pass the GPTHOUSETracer callback to the Graph.stream function
+for s in app.stream({"messages": [HumanMessage(content = "How to use LangGraph ?")]},
+                      config={"callbacks": [gpthouse_tracer]}):
+    print(s)
+
+# Pass the GPTHOUSETracer callback to the Graph.invoke function
+result = app.invoke({"messages": [HumanMessage(content = "How to use LangGraph ?")]},
+                      config={"callbacks": [gpthouse_tracer]})
+```
+
+Once the GPTHOUSETracer is configured, you will start to see the traces in the GPTHOUSE UI:
+
+<Frame>
+  <img src="/img/cookbook/langgraph_cookbook.png" />
+</Frame>
+
+## Practical Example: Classification Workflow
+
+Let's walk through a real-world example of using LangGraph with GPTHOUSE for a classification workflow. This example demonstrates how to create a graph with conditional routing and track its execution.
+
+### Setting up the Environment
+
+First, let's set up our environment with the necessary dependencies:
+
+```python
+import gpthouse
+
+# Configure GPTHOUSE
+gpthouse.configure(use_local=False)
+```
+
+### Creating the LangGraph Workflow
+
+We'll create a LangGraph workflow with 3 nodes that demonstrates conditional routing:
+
+```python
+from langgraph.graph import StateGraph, END
+from typing import TypedDict, Optional
+
+# Define the graph state
+class GraphState(TypedDict):
+    question: Optional[str] = None
+    classification: Optional[str] = None
+    response: Optional[str] = None
+
+# Create the node functions
+def classify(question: str) -> str:
+    return "greeting" if question.startswith("Hello") else "search"
+
+def classify_input_node(state):
+    question = state.get("question", "").strip()
+    classification = classify(question)
+    return {"classification": classification}
+
+def handle_greeting_node(state):
+    return {"response": "Hello! How can I help you today?"}
+
+def handle_search_node(state):
+    question = state.get("question", "").strip()
+    search_result = f"Search result for '{question}'"
+    return {"response": search_result}
+
+# Create the workflow
+workflow = StateGraph(GraphState)
+workflow.add_node("classify_input", classify_input_node)
+workflow.add_node("handle_greeting", handle_greeting_node)
+workflow.add_node("handle_search", handle_search_node)
+
+# Add conditional routing
+def decide_next_node(state):
+    return (
+        "handle_greeting"
+        if state.get("classification") == "greeting"
+        else "handle_search"
+    )
+
+workflow.add_conditional_edges(
+    "classify_input",
+    decide_next_node,
+    {"handle_greeting": "handle_greeting", "handle_search": "handle_search"},
+)
+
+workflow.set_entry_point("classify_input")
+workflow.add_edge("handle_greeting", END)
+workflow.add_edge("handle_search", END)
+
+app = workflow.compile()
+```
+
+### Executing with GPTHOUSE Tracing
+
+Now let's execute the workflow with GPTHOUSE tracing enabled:
+
+```python
+from gpthouse.integrations.langchain import GPTHOUSETracer
+
+# Create the GPTHOUSETracer with graph visualization
+tracer = GPTHOUSETracer(graph=app.get_graph(xray=True))
+
+# Execute the workflow
+inputs = {"question": "Hello, how are you?"}
+result = app.invoke(inputs, config={"callbacks": [tracer]})
+print(result)
+```
+
+The graph execution is now logged on the GPTHOUSE platform and can be viewed in the UI. The trace will show the complete execution path through the graph, including the classification decision and the chosen response path.
+
+## Logging threads
+
+When you are running multi-turn conversations using [LangGraph persistence](https://langchain-ai.github.io/langgraph/concepts/persistence/#threads), GPTHOUSE will use Langgraph's thread_id as GPTHOUSE thread_id. Here is an example below:
+
+```python
+import sqlite3
+from langgraph.checkpoint.sqlite import SqliteSaver
+from typing import Annotated
+from pydantic import BaseModel
+from gpthouse.integrations.langchain import GPTHOUSETracer
+from langchain_core.messages import HumanMessage
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langchain.chat_models import init_chat_model
+
+llm = init_chat_model("openai:gpt-4.1")
+
+
+# create your LangGraph graph
+class State(BaseModel):
+    messages: Annotated[list, add_messages]
+
+
+def chatbot(state):
+    # Typically your LLM calls would be done here
+    return {"messages": [llm.invoke(state.messages)]}
+
+
+graph = StateGraph(State)
+graph.add_node("chatbot", chatbot)
+graph.add_edge(START, "chatbot")
+graph.add_edge("chatbot", END)
+
+# Create a new SqliteSaver instance
+# Note: check_same_thread=False is OK as the implementation uses a lock
+# to ensure thread safety.
+conn = sqlite3.connect("checkpoints.sqlite", check_same_thread=False)
+memory = SqliteSaver(conn)
+
+app = graph.compile(checkpointer=memory)
+
+# Create the GPTHOUSETracer
+gpthouse_tracer = GPTHOUSETracer(graph=app.get_graph(xray=True))
+
+thread_id = "e424a45e-7763-443a-94ae-434b39b67b72"
+config = {"callbacks": [gpthouse_tracer], "configurable": {"thread_id": thread_id}}
+
+# Initialize the state
+state = State(**app.get_state(config).values) or State(messages=[])
+print("STATE", state)
+
+# Add the user message
+state.messages.append(HumanMessage(content="Hello, my name is Bob, how are you doing ?"))
+# state.messages.append(HumanMessage(content="What is my name ?"))
+
+result = app.invoke(state, config=config)
+
+print("Result", result)
+```
+
+## Updating logged traces
+
+You can use the [`GPTHOUSETracer.created_traces`](https://www.comet.com/docs/gpthouse/python-sdk-reference/integrations/langchain/GPTHOUSETracer.html#gpthouse.integrations.langchain.GPTHOUSETracer.created_traces) method to access the trace IDs collected by the GPTHOUSETracer callback:
+
+```python
+from gpthouse.integrations.langchain import GPTHOUSETracer
+
+gpthouse_tracer = GPTHOUSETracer()
+
+# Calling LangGraph stream or invoke functions
+
+traces = gpthouse_tracer.created_traces()
+print([trace.id for trace in traces])
+```
+
+These can then be used with the [`GPTHOUSE.log_traces_feedback_scores`](https://www.comet.com/docs/gpthouse/python-sdk-reference/GPTHOUSE.html#gpthouse.GPTHOUSE.log_traces_feedback_scores) method to update the logged traces.
+
+## Advanced usage
+
+The `GPTHOUSETracer` object has a `flush` method that can be used to make sure that all traces are logged to the GPTHOUSE platform before you exit a script. This method will return once all traces have been logged or if the timeout is reach, whichever comes first.
+
+```python
+from gpthouse.integrations.langchain import GPTHOUSETracer
+
+gpthouse_tracer = GPTHOUSETracer()
+gpthouse_tracer.flush()
+```

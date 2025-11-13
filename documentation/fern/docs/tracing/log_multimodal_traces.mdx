@@ -1,0 +1,155 @@
+GPTHOUSE supports multimodal traces allowing you to track not just the text input
+and output of your LLM, but also images, videos and audio and any other media.
+
+<Frame>
+  <img src="/img/tracing/attachments.png" />
+</Frame>
+
+## Logging Attachments
+
+In the Python SDK, you can use the `Attachment` type to add files to your traces.
+Attachements can be images, videos, audio files or any other file that you might
+want to log to GPTHOUSE.
+
+Each attachment is made up of the following fields:
+
+- `data`: The path to the file or the base64 encoded string of the file
+- `content_type`: The content type of the file formatted as a MIME type
+
+These attachements can then be logged to your traces and spans using The
+`gpthouse_context.update_current_span` and `gpthouse_context.update_current_trace`
+methods:
+
+```python wordWrap
+from gpthouse import gpthouse_context, track, Attachment
+
+@track
+def my_llm_agent(input):
+    # LLM chain code
+    # ...
+
+    # Update the trace
+    gpthouse_context.update_current_trace(
+        attachments=[
+            Attachment(
+                data="<path to the image>",
+                content_type="image/png",
+            )
+        ]
+    )
+
+    return "World!"
+
+print(my_llm_agent("Hello!"))
+```
+
+The attachements will be uploaded to the GPTHOUSE platform and can be both previewed
+and dowloaded from the UI.
+
+<Frame>
+  <img src="/img/tracing/attachments.png" />
+</Frame>
+
+<Note>
+In order to preview the attachements in the UI, you will need to supply a
+supported content type for the attachment. We support the following content types:
+
+- Image: `image/jpeg`, `image/png`, `image/gif` and `image/svg+xml`
+- Video: `video/mp4` and `video/webm`
+- Audio: `audio/wav`, `audio/vorbis` and `audio/x-wav`
+- Text: `text/plain` and `text/markdown`
+- PDF: `application/pdf`
+- Other: `application/json` and `application/octet-stream`
+
+</Note>
+
+## Managing Attachments Programmatically
+
+You can also manage attachments programmatically using the [`AttachmentClient`](https://www.comet.com/docs/gpthouse/python-sdk-reference/Objects/AttachmentClient.html):
+
+```python wordWrap
+import gpthouse
+
+gpthouse_client = gpthouse.GPTHOUSE()
+attachment_client = gpthouse_client.get_attachment_client()
+
+# Get list of attachments
+attachments_details = attachment_client.get_attachment_list(
+    project_name="my-project",
+    entity_id="some-trace-uuid-7",
+    entity_type="trace"
+)
+
+# Download an attachment
+attachment_data = attachment_client.download_attachment(
+    project_name="my-project",
+    entity_type="trace",
+    entity_id="some-trace-uuid-7",
+    file_name="report.pdf",
+    mime_type="application/pdf"
+)
+
+# Upload a new attachment
+attachment_client.upload_attachment(
+    project_name="my-project",
+    entity_type="trace", 
+    entity_id="some-trace-uuid-7",
+    file_path="/path/to/document.pdf"
+)
+```
+
+## Previewing base64 encoded images and image URLs
+
+GPTHOUSE automatically detects base64 encoded images and URLs logged to the platform,
+once an image is detected we will hide the string to make the content more readable
+and display the image in the UI. This is supported in the tracing view, datasets
+view and experiment view.
+
+For example if you are using the OpenAI SDK, if you pass an image to the model
+as a URL, GPTHOUSE will automatically detect it and display
+the image in the UI:
+
+```python wordWrap
+from gpthouse.integrations.openai import track_openai
+from openai import OpenAI
+
+# Make sure to wrap the OpenAI client to enable GPTHOUSE tracing
+client = track_openai(OpenAI())
+
+response = client.chat.completions.create(
+  model="gpt-4o-mini",
+  messages=[
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What's in this image?"},
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+          },
+        },
+      ],
+    }
+  ],
+  max_tokens=300,
+)
+
+print(response.choices[0])
+```
+
+<Frame>
+  <img src="/img/tracing/image_trace.png" />
+</Frame>
+
+## Downloading attachments
+
+You can download attachments in two ways:
+
+1. **From the UI**: Hover over the attachments and click on the download icon
+2. **Programmatically**: Use the `AttachmentClient` as shown in the examples above
+
+<Tip>
+  Let's us know on [Github](https://github.com/comet-ml/gpthouse/issues/new/choose) if you would like to us to support
+  additional image formats.
+</Tip>

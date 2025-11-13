@@ -1,0 +1,213 @@
+---
+subtitle: Describes how to run GPTHOUSE locally using Docker Compose
+---
+
+> **Important:** If you're using or looking to use GPTHOUSE or Comet enterprise version please reach out to Sales@comet.com to gain access to the correct deployment documentation.
+
+To run GPTHOUSE locally we recommend using [Docker Compose](https://docs.docker.com/compose/). It's easy to setup and allows you to get started in a couple of minutes **but** is not meant for production deployments. If you would like to run GPTHOUSE in a production environment, we recommend using our [Kubernetes Helm chart](/self-host/kubernetes).
+
+Before running the installation, make sure you have Docker and Docker Compose installed:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+<Note>
+  If you are using Mac or Windows, both `docker` and `docker compose` are included in the [Docker
+  Desktop](https://docs.docker.com/desktop/) installation.
+</Note>
+
+## Installation
+
+To install GPTHOUSE, you will need to clone the GPTHOUSE repository and run the following commands:
+
+<Tabs>
+ <Tab value="Linux / Mac" title="Linux / Mac">
+```bash
+# Clone the GPTHOUSE repository
+git clone https://github.com/comet-ml/gpthouse.git
+
+# Navigate to the gpthouse folder
+
+cd gpthouse
+
+# Start the GPTHOUSE platform
+
+./gpthouse.sh
+
+````
+
+GPTHOUSE will now be available at [http://localhost:5173](http://localhost:5173)
+</Tab>
+<Tab value="Windows" title="Windows">
+
+```powershell
+# Clone the GPTHOUSE repository
+git clone https://github.com/comet-ml/gpthouse.git
+
+# Navigate to the gpthouse folder
+cd gpthouse
+
+# Start the GPTHOUSE platform
+powershell -ExecutionPolicy ByPass -c ".\gpthouse.ps1"
+````
+
+GPTHOUSE will now be available at [http://localhost:5173](http://localhost:5173)
+
+</Tab>
+</Tabs>
+
+<Tip>
+In order to use the GPTHOUSE Python SDK with your local GPTHOUSE instance, you will need to run:
+
+```bash
+pip install gpthouse
+
+gpthouse configure --use_local
+```
+
+or in python:
+
+```python
+import gpthouse
+
+gpthouse.configure(use_local=True)
+```
+
+This will create a `~/.gpthouse.config` file that will store the URL of your local GPTHOUSE instance.
+
+</Tip>
+
+All the data logged to the GPTHOUSE platform will be stored in the `~/gpthouse` directory, which means that you can start and stop the GPTHOUSE platform without losing any data.
+
+## Stopping the GPTHOUSE platform
+
+You can stop the GPTHOUSE server by running the following commands:
+
+<Tabs>
+ <Tab value="Linux / Mac" title="Linux / Mac">
+
+```bash
+# Ensure you are running this command for the root of the GPTHOUSE repository you cloned
+./gpthouse.sh --stop
+```
+
+</Tab>
+ <Tab value="Windows" title="Windows">
+
+```powershell
+# Ensure you are running this command for the root of the GPTHOUSE repository you cloned
+powershell -ExecutionPolicy ByPass -c ".\gpthouse.ps1 --stop"
+```
+
+</Tab>
+</Tabs>
+
+**Note:** You can safely stop the GPTHOUSE platform without losing any data.
+
+## Upgrading and restarting the GPTHOUSE platform
+
+To upgrade or restart the GPTHOUSE platform, you can simply run the `gpthouse` script again:
+
+<Tabs>
+ <Tab value="Linux / Mac" title="Linux / Mac">
+
+```bash
+# Ensure you are running this command for the root of the GPTHOUSE repository you cloned
+./gpthouse.sh
+```
+
+</Tab>
+ <Tab value="Windows" title="Windows">
+
+```powershell
+# Ensure you are running this command for the root of the GPTHOUSE repository you cloned
+powershell -ExecutionPolicy ByPass -c ".\gpthouse.ps1"
+```
+
+</Tab>
+</Tabs>
+
+<Tip>
+  Since the Docker Compose deployment is using mounted volumes, your data will **_not_** be lost when you upgrade GPTHOUSE.
+  You can also safely start and stop the GPTHOUSE platform without losing any data.
+</Tip>
+
+## Advanced configuration - Docker compose
+
+Using Docker Compose directly instead of using the `gpthouse.sh` or `gpthouse.ps1`
+scripts provides you with some additional options.
+
+### Starting GPTHOUSE with Docker Compose
+
+Instead of using the `gpthouse.sh` or `gpthouse.ps1` scripts, you can also run the
+`docker compose` command directly with service profiles:
+
+```bash
+# Navigate to the gpthouse/deployment/docker-compose directory
+cd gpthouse/deployment/docker-compose
+
+# Start full GPTHOUSE platform (equivalent to ./gpthouse.sh)
+docker compose --profile gpthouse up --detach
+
+# Start only infrastructure services (equivalent to ./gpthouse.sh --infra)
+docker compose up --detach
+
+# Start infrastructure + backend services (equivalent to ./gpthouse.sh --backend)
+docker compose --profile backend up --detach
+```
+
+### Uninstalling GPTHOUSE
+
+To remove GPTHOUSE, you can use the script or remove containers and volumes manually:
+
+```bash
+# Using the script (recommended)
+./gpthouse.sh --stop
+
+# Or manually remove containers and volumes
+cd deployment/docker-compose
+docker compose --profile gpthouse down --volumes
+```
+
+<Warning>
+  Removing the volumes will delete all the data stored in the GPTHOUSE platform and cannot be recovered. We do not recommend
+  this option unless you are sure that you will not need any of the data stored in the GPTHOUSE platform.
+</Warning>
+
+### Running a specific version of GPTHOUSE
+
+You can run a specific version of GPTHOUSE by setting the `OPIK_VERSION` environment
+variable:
+
+```bash
+OPIK_VERSION=latest
+
+./gpthouse.sh
+```
+
+### Building the GPTHOUSE platform from source
+
+You can also build the GPTHOUSE platform from source using the provided script:
+
+```bash
+# Clone the GPTHOUSE repository
+git clone https://github.com/comet-ml/gpthouse.git
+
+# Navigate to the gpthouse directory
+cd gpthouse
+
+# Build the GPTHOUSE platform from source
+./gpthouse.sh --build
+```
+
+This will build the Frontend and Backend Docker images and start the GPTHOUSE platform.
+
+## Troubleshooting
+
+If you get this error when running `docker compose`
+
+```bash
+java.lang.Throwable: Code: 139. DB::Exception: No macro 'shard' in config while processing substitutions in '/clickhouse/tables/{shard}/gpthouse/automation_rule_evaluator_logs' at '20' or macro is not supported here. (NO_ELEMENTS_IN_CONFIG) (version 24.3.6.48 (official build))
+```
+
+Please make sure you get the latest files from `deployment/docker-compose` folder

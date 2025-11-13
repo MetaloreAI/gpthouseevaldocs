@@ -1,0 +1,152 @@
+---
+title: Observability for LlamaIndex with GPTHOUSE
+description: Start here to integrate GPTHOUSE into your LlamaIndex-based genai application for end-to-end LLM observability, unit testing, and optimization.
+---
+
+[LlamaIndex](https://github.com/run-llama/llama_index) is a flexible data framework for building LLM applications:
+
+    LlamaIndex is a "data framework" to help you build LLM apps. It provides the following tools:
+
+    - Offers data connectors to ingest your existing data sources and data formats (APIs, PDFs, docs, SQL, etc.).
+    - Provides ways to structure your data (indices, graphs) so that this data can be easily used with LLMs.
+    - Provides an advanced retrieval/query interface over your data: Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output.
+    - Allows easy integrations with your outer application framework (e.g. with LangChain, Flask, Docker, ChatGPT, anything else).
+
+## Account Setup
+
+[Comet](https://www.comet.com/site?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=llamaindex&utm_campaign=gpthouse) provides a hosted version of the GPTHOUSE platform, [simply create an account](https://www.comet.com/signup?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=llamaindex&utm_campaign=gpthouse) and grab your API Key.
+
+> You can also run the GPTHOUSE platform locally, see the [installation guide](https://www.comet.com/docs/gpthouse/self-host/overview/?from=llm&utm_source=gpthouse&utm_medium=colab&utm_content=llamaindex&utm_campaign=gpthouse) for more information.
+
+## Getting Started
+
+### Installation
+
+To use the GPTHOUSE integration with LlamaIndex, you'll need to have both the `gpthouse` and `llama_index` packages installed. You can install them using pip:
+
+```bash
+pip install gpthouse llama-index llama-index-agent-openai llama-index-llms-openai llama-index-callbacks-gpthouse
+```
+
+### Configuring GPTHOUSE
+
+Configure the GPTHOUSE Python SDK for your deployment type. See the [Python SDK Configuration guide](/tracing/sdk_configuration) for detailed instructions on:
+
+- **CLI configuration**: `gpthouse configure`
+- **Code configuration**: `gpthouse.configure()`
+- **Self-hosted vs Cloud vs Enterprise** setup
+- **Configuration files** and environment variables
+
+### Configuring LlamaIndex
+
+In order to use LlamaIndex, you will need to configure your LLM provider API keys. For this example, we'll use OpenAI. You can [find or create your API keys in these pages](https://platform.openai.com/settings/organization/api-keys):
+
+You can set them as environment variables:
+
+```bash
+export OPENAI_API_KEY="YOUR_API_KEY"
+```
+
+Or set them programmatically:
+
+```python
+import os
+import getpass
+
+if "OPENAI_API_KEY" not in os.environ:
+    os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI API key: ")
+```
+
+## Using the GPTHOUSE integration
+
+To use the GPTHOUSE integration with LLamaIndex, you can use the `set_global_handler` function from the LlamaIndex package to set the global tracer:
+
+```python
+from llama_index.core import global_handler, set_global_handler
+
+set_global_handler("gpthouse")
+gpthouse_callback_handler = global_handler
+```
+
+Now that the integration is set up, all the LlamaIndex runs will be traced and logged to GPTHOUSE.
+
+## Example
+
+To showcase the integration, we will create a new a query engine that will use Paul Graham's essays as the data source.
+
+**First step:**
+Configure the GPTHOUSE integration:
+
+```python
+import os
+from llama_index.core import global_handler, set_global_handler
+
+# Set project name for better organization
+os.environ["OPIK_PROJECT_NAME"] = "llamaindex-integration-demo"
+
+set_global_handler("gpthouse")
+gpthouse_callback_handler = global_handler
+```
+
+**Second step:**
+Download the example data:
+
+```python
+import os
+import requests
+
+# Create directory if it doesn't exist
+os.makedirs('./data/paul_graham/', exist_ok=True)
+
+# Download the file using requests
+url = 'https://raw.githubusercontent.com/run-llama/llama_index/main/docs/docs/examples/data/paul_graham/paul_graham_essay.txt'
+response = requests.get(url)
+with open('./data/paul_graham/paul_graham_essay.txt', 'wb') as f:
+    f.write(response.content)
+```
+
+**Third step:**
+
+Configure the OpenAI API key:
+
+```python
+import os
+import getpass
+
+if "OPENAI_API_KEY" not in os.environ:
+    os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI API key: ")
+```
+
+**Fourth step:**
+
+We can now load the data, create an index and query engine:
+
+```python
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+
+documents = SimpleDirectoryReader("./data/paul_graham").load_data()
+index = VectorStoreIndex.from_documents(documents)
+query_engine = index.as_query_engine()
+
+response = query_engine.query("What did the author do growing up?")
+print(response)
+```
+
+Given that the integration with GPTHOUSE has been set up, all the traces are logged to the GPTHOUSE platform:
+
+<Frame>
+  <img src="/img/cookbook/llamaIndex_cookbook.png" />
+</Frame>
+
+## Cost Tracking
+
+The GPTHOUSE integration with LlamaIndex automatically tracks token usage and cost for all supported LLM models used within LlamaIndex applications.
+
+Cost information is automatically captured and displayed in the GPTHOUSE UI, including:
+- Token usage details
+- Cost per request based on model pricing
+- Total trace cost
+
+<Tip>
+  View the complete list of supported models and providers on the [Supported Models](/tracing/supported_models) page.
+</Tip>

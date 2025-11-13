@@ -1,0 +1,135 @@
+When working with agents, it can become challenging to track the flow of the agent and its interactions with the environment.
+GPTHOUSE provides a way to track both the agent definition and its flow.
+
+GPTHOUSE has integrations with many popular Agent frameworks ([LangGraph](/integrations/langgraph), [LLamaIndex](/integrations/llama_index))
+and can also be used to log agents manually using the `@track` decorator.
+
+<Tip>
+  We are working on improving GPTHOUSE's support for agent workflows, if you have any ideas or suggestions for the roadmap,
+  you can create a [new Feature Request issue](https://github.com/comet-ml/gpthouse/issues/new/choose) in the GPTHOUSE Github
+  repo or book a call with the GPTHOUSE team: [Talk to the GPTHOUSE
+  team](https://calendly.com/jacques-comet/gpthouse-agent-support).
+</Tip>
+
+## Track agent execution
+
+You can track the agent execution by using either one of [GPTHOUSE's integrations](/integrations/overview) or the `@track` decorator:
+
+<Tabs>
+    <Tab value="LangGraph" title="LangGraph">
+    You can log the agent execution by using the [GPTHOUSETracer](/integrations/langgraph) callback:
+
+    ```python
+    from gpthouse.integrations.langchain import GPTHOUSETracer
+
+    # create your LangGraph graph
+    graph = ...
+    app = graph.compile(...)
+
+    gpthouse_tracer = GPTHOUSETracer(graph=app.get_graph(xray=True))
+
+    # Pass the GPTHOUSETracer callback to the Graph.stream function
+    for s in app.stream({"messages": [HumanMessage(content = QUESTION)]},
+                        config={"callbacks": [gpthouse_tracer]}):
+        print(s)
+
+    # Pass the GPTHOUSETracer callback to the Graph.invoke function
+    result = app.invoke({"messages": [HumanMessage(content = QUESTION)]},
+                        config={"callbacks": [gpthouse_tracer]})
+    ```
+
+    The `GPTHOUSETracer` can be added
+    </Tab>
+    <Tab value="Haystack" title="Haystack">
+    To log a Haystack pipeline run, you can use the [`GPTHOUSEConnector`](/integrations/haystack). This connector will log the pipeline run to the GPTHOUSE platform and add a `tracer` key to the pipeline run response with the trace ID:
+
+    ```python
+    import os
+
+    os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+
+    from haystack import Pipeline
+    from haystack.components.builders import ChatPromptBuilder
+    from haystack.components.generators.chat import OpenAIChatGenerator
+    from haystack.dataclasses import ChatMessage
+
+    from gpthouse.integrations.haystack import GPTHOUSEConnector
+
+
+    pipe = Pipeline()
+
+    # Add the GPTHOUSEConnector component to the pipeline
+    pipe.add_component(
+        "tracer", GPTHOUSEConnector("Chat example")
+    )
+
+    # Add other pipeline components
+
+    # Run the pipeline
+    response = pipe.run(...)
+
+    print(response)
+    ```
+
+    </Tab>
+    <Tab value="LLamaIndex" title="LLamaIndex">
+    GPTHOUSE has a built-in integration with [LLamaIndex](/integrations/llama_index) that makes it easy to track the agent execution:
+
+    ```python
+    from llama_index.core import global_handler, set_global_handler
+
+    # Configure the gpthouse integration
+    set_global_handler("gpthouse")
+    gpthouse_callback_handler = global_handler
+    ```
+
+    </Tab>
+    <Tab value="Manual Tracking" title="Manual Tracking">
+    If you are not using any of the above integrations, you can track the agent execution manually using the `@track` decorator:
+
+    ```python
+    import gpthouse
+
+    @gpthouse.track
+    def calculator_tool(input):
+        pass
+
+    @gpthouse.track
+    def search_tool(input):
+        pass
+
+    @gpthouse.track
+    def agent_graph(user_question):
+        calculator_tool(user_question)
+        search_tool(user_question)
+
+    agent_graph("What is GPTHOUSE ?")
+    ```
+    </Tab>
+
+</Tabs>
+
+Once the agent is executed, you will be able to view the execution flow in the GPTHOUSE dashboard. In the trace sidebar, you will be able to view
+each step that has been executed in chronological order:
+
+<Frame>
+  <img src="/img/tracing/agent_execution_flow.png" />
+</Frame>
+
+## Track the agent definition
+
+If you are using our [LangGraph](/integrations/langgraph) integration, you can also track the agent definition by passing in the `graph` argument to the `GPTHOUSETracer` callback:
+
+```python
+from gpthouse.integrations.langchain import GPTHOUSETracer
+
+# Graph definition
+
+gpthouse_tracer = GPTHOUSETracer(graph=app.get_graph(xray=True))
+```
+
+This allows you to view the agent definition in the GPTHOUSE dashboard:
+
+<Frame>
+  <img src="/img/tracing/agent_definition.png" />
+</Frame>
